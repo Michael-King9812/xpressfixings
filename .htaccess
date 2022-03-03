@@ -1,0 +1,53 @@
+# <IfModule mod_rewrite.c>
+#     <IfModule mod_negotiation.c>
+#         Options -MultiViews -Indexes
+#     </IfModule>
+
+#     RewriteEngine On
+
+#     # Send Requests To Front Controller...
+#     RewriteCond %{HTTP_HOST} ^(www.)?xpressfixing.com$
+#     RewriteRule ^(/)?$ public/.htaccess [L]
+#     # RewriteRule ^(.*)$ /public/$1 [L]
+# </IfModule>
+
+
+
+# Do not change this line.
+
+RewriteEngine on
+
+# Change example.com to be your main domain.
+
+RewriteCond %{HTTP_HOST} ^(www.)?xpressfixing.com$
+
+# Change ‘subdirectory’ to be the directory you will use for your main domain.
+
+RewriteCond %{REQUEST_URI} !^/public/
+
+# Don’t change the following two lines.
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Change ‘subdirectory’ to be the directory you will use for your main domain.
+
+RewriteRule ^(.*)$ /public/$1
+
+# Change example.com to be your main domain again.
+
+# Change ‘subdirectory’ to be the directory you will use for your main domain
+
+# followed by / then the main file for your site, index.php, index.html, etc.
+
+RewriteCond %{HTTP_HOST} ^(www.)?xpressfixing.com$
+
+RewriteRule ^(/)?$ public/index.html [L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php81” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php81___lsphp .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
