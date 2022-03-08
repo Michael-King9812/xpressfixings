@@ -164,28 +164,28 @@ class EngineerController extends Controller
 
 
     
-    public function updatePrice(Request $request, $token)
-    {
-        $request->validate([
-            'fixingprice'=>'required'
-        ]);
+    // public function updatePrice(Request $request, $token)
+    // {
+    //     $request->validate([
+    //         'fixingprice'=>'required'
+    //     ]);
         
-        $fixPrice = Orderdetail::where('remember_token', $token)->first();
+    //     $fixPrice = Orderdetail::where('remember_token', $token)->first();
      
 
-        $fixPrice->status = "4"; 
-        $fixPrice->approval = "1";
-        $fixPrice->deviceFixPrice = $request->input('fixingprice');
+    //     $fixPrice->status = "4"; 
+    //     $fixPrice->approval = "1";
+    //     $fixPrice->deviceFixPrice = $request->input('fixingprice');
 
-        $updateFixPrice = $fixPrice->save();
+    //     $updateFixPrice = $fixPrice->save();
 
-        if ($updateFixPrice) {
-            return redirect()->back()->with('success', 'Order Approved Successfully.');
-        } else {
-            return redirect()->back()->with('fail', 'Order Approval Failed.');
-        }
+    //     if ($updateFixPrice) {
+    //         return redirect()->back()->with('success', 'Order Approved Successfully.');
+    //     } else {
+    //         return redirect()->back()->with('fail', 'Order Approval Failed.');
+    //     }
         
-    }
+    // }
 
 
 

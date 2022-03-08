@@ -147,14 +147,14 @@
                         <!-- User Profile-->
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('engineer.newOrders')}}" aria-expanded="false"><i
-                                class="mdi mdi-account-network"></i><span class="hide-menu">New Orders</span></a></li>
+                                class="mdi mdi-dns"></i><span class="hide-menu">New Orders</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="{{route('engineer.customers')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
                                     class="hide-menu">Manage Orders</span></a></li>
                                     
                                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('engineer.doneOrders')}}" aria-expanded="false"><i
-                                class="mdi mdi-account-network"></i><span class="hide-menu">All Done Order</span></a></li>
+                                class="mdi mdi-check-all"></i><span class="hide-menu">All Done Order</span></a></li>
                                 <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('allAwaiting')}}" aria-expanded="false"><i
                                 class="mdi mdi-account-network"></i><span class="hide-menu">All Waiting Order</span></a></li> -->
@@ -162,7 +162,7 @@
                        
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="" aria-expanded="false"><i
-                                class="mdi mdi-account-network"></i><span class="hide-menu">Profile</span></a></li>
+                                class="mdi mdi-image-filter-vintage"></i><span class="hide-menu">Profile</span></a></li>
                     </ul><br><br><br><br>
 
                 </nav>
@@ -215,7 +215,7 @@
             <!-- ============================================================== -->
             <footer class="footer text-center">
                     All Rights Reserved by Xpressfixing. Designed and Developed by <a
-                        href="#">Xpressfixing</a>.
+                        href="https://xpressfixing.com">Xpressfixing</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

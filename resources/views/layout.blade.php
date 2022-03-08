@@ -165,7 +165,7 @@
                 </div>
             </div>
         
-            <p class="footer__copy">&#169; 2022 Xpressfix. All right reserved</p>
+            <p class="footer__copy">&#169; <?php echo Date('Y') ?> <a href="https://xpressfixing.com">Xpressfix</a>. All right reserved</p>
         </footer>
 
         <script>

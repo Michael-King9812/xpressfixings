@@ -117,6 +117,10 @@
                                         ?> 
                                         </span></td>
                                     </tr>
+                                    <tr>
+                                        <th colspan="6">Time:</th>
+                                        <td> {{ $orderDetails->created_at->diffForHumans() }} </td>
+                                    </tr>
                                     <?php    
                                         if($orderDetails->status == '0') {
                                             echo "";
@@ -293,39 +297,41 @@
                         
                         <!-- <div class="col-md-1"></div> -->
                         <div class="col-md-6">
-                        <h4 class="section-title" style="text-align: left; font-weight: bold; font-size: 25px;">Engineer Details</h4><br>
-                           <table class="table table-responsive">
-                               <tbody>
-                                    <tr>
-                                        <th colspan="6">Engineers Name:</th>
-                                        <td> {{ $assignedEngineer->fullname }} </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="6">Engineers Phone:</th>
-                                        <td> {{ $assignedEngineer->phoneNumber }} </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="6">Engineers Email:</th>
-                                        <td> {{ $assignedEngineer->email }} </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="6">Engineers Address:</th>
-                                        <td> {{ $assignedEngineer->address }} </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="6">Engineers City of Residence:</th>
-                                        <td> {{ $assignedEngineer->city }} </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="6">Engineers State:</th>
-                                        <td> {{ $assignedEngineer->state }} State</td>
-                                    </tr>
-                               </tbody>
-                           </table>
+                            @if($orderDetails->status == '4' && $orderDetails->approval == '2')
+                                <h4 class="section-title" style="text-align: left; font-weight: bold; font-size: 25px;">Engineer Details</h4><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Select Engineer</label>
+                                    <div class="col-sm-12">
+                                        <select name="selectEngineer" id="selectEngineer" placeholder="Choose Engineer" value="{{old('selectEngineer')}}" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                            <option id="engineerOptions" value="">Choose Engineer</option>      
+                                            @foreach($allEngineers as $listEngineers)
+                                                <option value="{{$listEngineers->remember_token}}">{{$listEngineers->fullname}}</option>
+                                            @endforeach
+                                        </select>
+                                        
+                                        @error('selectEngineer') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
+                                        
+                                        <table class="table" id="#table">
+                                            <br>
+                                            <tbody id="engineerDetails" class="tbody">
+                                            
+                                            </tbody>
+                                        </table>
+                                        <div id="select" style="visibility: hidden; display: none;">
+                                            <form action='{{route("cancle.ride", $orderDetails->remember_token)}}' method='post'>
+                                                @csrf
+                                                @method('put')
+                                                <button class='btn btn-success' style='color: white; border-radius: 0;'><i class='fa fa-check'></i> Select Engineer </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-                            <!-- <img src="{{asset('customers/assets/img/home.png')}}" alt="" class="home__img"> -->
-                            <h4 class="section-title" style="text-align: left; font-weight: bold; font-size: 25px;">Order Ride</h4>
+
+
+                                <h4 class="section-title" style="text-align: left; font-weight: bold; font-size: 25px;">Order Ride</h4>
                                         <p style="color: red; font-size: 14px;">&nbsp; &nbsp;<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Feature is coming soon...</p>
                                 <form action="#" method="post" class="form-horizontal form-material mx-2">
                                    
@@ -356,13 +362,9 @@
                                             <div class="col-sm-12">
                                                 <select name="current-state" class="form-select shadow-none form-control form-control-line"  style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     <option value="">Please Select Current State</option>    
-                                                    <option value="Kwara">Kwara</option>
-                                                    <option value="Osun">Osun</option>
-                                                    <option value="Niger">Niger</option>
-                                                    <option value="Kaduna">Kaduna</option>
-                                                    <option value="Plateu">Plateu</option>
-                                                    <option value="Sokoto">Sokoto</option>
-                                                    <option value="FCT">FCT</option>
+                                                    @foreach($allEngineers as $listStates)
+                                                        <option value="{{$listStates->stateName}}">{{$listStates->stateName}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -380,7 +382,43 @@
                                         <button class="btn btn-primary text-white" disabled>Order Ride</button>
                                     </div>
                                 </div>
-                            </form><br><br>
+                            </form>
+                            @endif
+
+                            @if($orderDetails->assignedEngineer != "")
+                                <table class="table table-responsive">
+                                    <tbody>
+                                            <tr>
+                                                <th colspan="6">Engineers Name:</th>
+                                                <td> {{ $assignedEngineer->fullname }} </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6">Engineers Phone:</th>
+                                                <td> {{ $assignedEngineer->phoneNumber }} </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6">Engineers Email:</th>
+                                                <td> {{ $assignedEngineer->email }} </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6">Engineers Address:</th>
+                                                <td> {{ $assignedEngineer->address }} </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6">Engineers City of Residence:</th>
+                                                <td> {{ $assignedEngineer->city }} </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6">Engineers State:</th>
+                                                <td> {{ $assignedEngineer->state }} State</td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            @endif
+
+                            <!-- <img src="{{asset('customers/assets/img/home.png')}}" alt="" class="home__img"> -->
+                            
+                            <br><br>
                             
                         </div>   
                         
@@ -484,6 +522,56 @@
         </script>
 
 
+        <script>
+            $('#selectEngineer').change(function () {
+                        
+                $.ajax({
+                    url: "/views/engineer/"+$('#selectEngineer').val(),
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+
+                        
+                        
+                        $('#engineerDetails') .find('tr') .remove() .end().append('\
+                                <tr>\
+                                    <td>Name:</td>\
+                                    <td>'+response.fullname+'</td>\
+                                </tr>\
+                                <tr>\
+                                    <td>Phone Number:</td>\
+                                    <td>'+response.phoneNumber+'</td>\
+                                </tr>\
+                                <tr>\
+                                    <td>Email Address:</td>\
+                                    <td>'+response.email+'</td>\
+                                </tr>\
+                                <tr>\
+                                    <td>Address:</td>\
+                                    <td>'+response.address+'</td>\
+                                </tr>\
+                                <tr>\
+                                    <td>City:</td>\
+                                    <td>'+response.city+'</td>\
+                                </tr>\
+                                <tr>\
+                                    <td>State:</td>\
+                                    <td>'+response.state+'</td>\
+                                </tr>\
+                                ');
+                                
+                                if($('#selectEngineer').val() != '') {
+                                    $("#select").css({
+                                        display: "block",
+                                        visibility: "visible"
+                                    });
+                                } 
+                    }
+                });
+                
+
+            });
+        </script>
 
 
         <script>

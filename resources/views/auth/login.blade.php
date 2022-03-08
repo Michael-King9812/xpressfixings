@@ -64,7 +64,7 @@
 					<div class="m-b-23" style="color: darkred;">@error('password') {{$message}} @enderror</div>
 					
 					<div class="text-right p-t-8 p-b-31">
-						<a href="#">
+						<a href="{{route('auth.forgotpassword')}}">
 							Forgot password?
 						</a>
 						<a href="{{route('auth.registration')}}" class="txt2">
@@ -87,6 +87,9 @@
 							<a href="{{route('index')}}"><span style="font-weight: bold; font-size: 20px;">&laquo;</span> Back Home</a><br><br>
 						</span>
 						<span>
+							<a href="{{route('auth.engineer')}}" style="font-weight: bold;">Login as Engineer</a>
+						</span><br><br>
+						<span>
 							Or Sign Up Using
 						</span>
 					</div>
@@ -106,7 +109,9 @@
 					</div>
 
 				
-				</form>
+				</form><br><br><br>
+
+<center><span style="font-size: 12px; font-wigth: bold;">All right reserved. <?php echo Date('Y'); ?> @ <a href="xpressfixing.com">Xpressfixing</a></span></center>
 			</div>
 		</div>
 	</div>

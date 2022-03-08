@@ -77,23 +77,19 @@
 					</div>
 					<div class="m-b-23" style="color: darkred;">@error('address') {{$message}} @enderror</div>
 
-					<div class="m-b-23" style="color: darkred;">@error('city') {{$message}} @enderror</div>
-
 					<div class="wrap-input100 validate-input" data-validate = "Full Name is Required">
 						<span class="label-input100">State</span>
 						<select class="input100" type="text" name="state" value="{{old('state')}}" style="border: none; outline: none;" placeholder="Enter your Shop State">
 							<option value="">Select Current State</option>
-							<option value="Kwara">Kwara</option>
-							<option value="Osun">Osun</option>
-							<option value="Niger">Niger</option>
-							<option value="Kaduna">Kaduna</option>
-							<option value="Plateu">Plateu</option>
-							<option value="Sokoto">Sokoto</option>
-							<option value="FCT">FCT</option> 
+							@foreach($allStates as $listStates)
+								<option value="{{$listStates->stateName}}">{{$listStates->stateName}}</option>
+							@endforeach
 							
 						</select>
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
-					</div><br>
+					</div>
+					<div class="m-b-23" style="color: darkred;">@error('state') {{$message}} @enderror</div>
+					<br>
 
 					<div class="wrap-input100 validate-input" data-validate = "Full Name is Required">
 						<span class="label-input100">City</span>
@@ -101,7 +97,7 @@
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
-					<div class="m-b-23" style="color: darkred;">@error('state') {{$message}} @enderror</div>
+					<div class="m-b-23" style="color: darkred;">@error('city') {{$message}} @enderror</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">Password</span>

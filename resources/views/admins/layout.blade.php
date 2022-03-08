@@ -142,7 +142,7 @@
                                         <span class="op-5 user-email"> {{$data->email}}</span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="Userdd">
-                                        <a href="{{route('customer.profile')}}" class="dropdown-item" href="javascript:void(0)"><i
+                                        <a href="{{route('admin.profile')}}" class="dropdown-item" href="javascript:void(0)"><i
                                                 class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                         <!-- <a class="dropdown-item" href="javascript:void(0)"><i
                                                 class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
@@ -165,24 +165,28 @@
                         </li>
                         <!-- User Profile-->
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                            href="{{route('allPending')}}" aria-expanded="false"><i
-                                class="mdi mdi-account-network"></i><span class="hide-menu">New Orders</span></a></li>
+                            href="{{route('allPendings')}}" aria-expanded="false"><i
+                                class="mdi mdi-dns"></i><span class="hide-menu">New Orders</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{route('admin.customers')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                                href="{{route('admin.customers')}}" aria-expanded="false"><i class="mdi mdi-database-plus"></i><span
                                     class="hide-menu">Manage Orders</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{route('admin.addEngineer')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                                href="{{route('admin.addEngineer')}}" aria-expanded="false"><i class="mdi mdi-monitor-multiple"></i><span
                                     class="hide-menu">Manage Engineers</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{route('admin.riders')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                                href="{{route('admin.riders')}}" aria-expanded="false"><i class="mdi mdi-motorbike"></i><span
                                     class="hide-menu">Manage Riders </span></a></li>
+                        
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{route('approve.engineer')}}" aria-expanded="false"><i class="mdi mdi-check-circle"></i><span
+                                class="hide-menu">Approve Engineer </span></a></li>
                                     
                                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('allDone')}}" aria-expanded="false"><i
-                                class="mdi mdi-account-network"></i><span class="hide-menu">All Done Order</span></a></li>
-                                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                class="mdi mdi-check-all"></i><span class="hide-menu">All Done Order</span></a></li>
+                                <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('allAwaiting')}}" aria-expanded="false"><i
-                                class="mdi mdi-account-network"></i><span class="hide-menu">All Waiting Order</span></a></li>
+                                class="mdi mdi-account-network"></i><span class="hide-menu">All Waiting Order</span></a></li> -->
                                 <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('admin.allCustomers')}}" aria-expanded="false"><i
                                 class="mdi mdi-account-network"></i><span class="hide-menu">All Cancle Order</span></a></li> -->
@@ -190,21 +194,21 @@
 
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('admin.allCustomers')}}" aria-expanded="false"><i
-                                class="mdi mdi-account-network"></i><span class="hide-menu">List of Customers</span></a></li>
+                                class="mdi mdi-human-male-female"></i><span class="hide-menu">List of Customers</span></a></li>
                        
                        
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('admin.addProblems')}}" aria-expanded="false"><i
-                        class="mdi mdi-account-network"></i><span class="hide-menu">Add Possible Problems</span></a></li>
+                        class="mdi mdi-comment-plus-outline"></i><span class="hide-menu">Add Possible Problems</span></a></li>
                         <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('admin.addProblems')}}" aria-expanded="false"><i
                         class="mdi mdi-account-network"></i><span class="hide-menu">Add Possible Problems</span></a></li> -->
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('admin.addStates')}}" aria-expanded="false"><i
-                        class="mdi mdi-account-network"></i><span class="hide-menu">Add State</span></a></li>
+                        class="mdi mdi-map-marker-plus"></i><span class="hide-menu">Add State</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{route('admin.profile')}}" aria-expanded="false"><i
-                                class="mdi mdi-account-network"></i><span class="hide-menu">Profile</span></a></li>
+                                class="mdi mdi-image-filter-vintage"></i><span class="hide-menu">Profile</span></a></li>
                     </ul><br><br><br><br>
 
                 </nav>
@@ -257,7 +261,7 @@
             <!-- ============================================================== -->
             <footer class="footer text-center">
                     All Rights Reserved by Xpressfixing. Designed and Developed by <a
-                        href="#">Xpressfixing</a>.
+                        href="https://xpressfixing.com">Xpressfixing</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

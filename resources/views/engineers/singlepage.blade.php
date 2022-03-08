@@ -64,6 +64,8 @@
                                 <h6>{{ $userOrderDetails->currentState }}</h6> 
                                 <small class="text-muted p-t-30 db">Current City</small>
                                 <h6>{{ $userOrderDetails->currentCity }}</h6> 
+                                <small class="text-muted p-t-30 db">Time</small>
+                                <h6>{{ $userOrderDetails->created_at->diffForHumans() }}</h6> 
                                 <small class="text-muted p-t-30 db">Status</small>
                                 <h6>
                                     <?php    
@@ -191,7 +193,7 @@
         <div class="card">
             <div class="card-body">
                 
-            <form action="{{route('engineer.deviceFixPrice', $userOrderDetails->remember_token)}}" method="post" class="form-horizontal form-material mx-2">            
+            <!-- <form action="{{route('engineer.deviceFixPrice', $userOrderDetails->remember_token)}}" method="post" class="form-horizontal form-material mx-2">            
                             @csrf
                             @method('put') 
                 
@@ -207,26 +209,24 @@
 
 
                     <h3 style="font-weight: bold;">Assign Price</h3>
-                    
-                    
-                        <div class="form-group">
-                            
-                            <div class="col-sm-10 col-md-12">
-                                <label class="col-sm-12 col-md-10" style="font-weight: bold;">Enter Price Here:</label>
-                                <div class="col-sm-6 col-md-6">
-                                    <input class="shadow-none form-control" name="fixingprice" value="{{$userOrderDetails->deviceFixPrice}}" value="{{old('fixingprice')}}" style="font-weight: bold;" value="" placeholder="#">
-                                    
-                                </div>
-                                @error('fixingprice') <p style="color: red; font-size: 12px;">{{$message}}</p> @enderror
-                                <div class="col-sm-8 col-md-10" style="padding: 8px;">
-                                <button class="btn btn-success" style="font-weight: bold; color: white">Approve Order</button>
-                                </div>
+                    <div class="form-group">
+                        
+                        <div class="col-sm-10 col-md-12">
+                            <label class="col-sm-12 col-md-10" style="font-weight: bold;">Enter Price Here:</label>
+                            <div class="col-sm-6 col-md-6">
+                                <input class="shadow-none form-control" name="fixingprice" value="{{$userOrderDetails->deviceFixPrice}}" value="{{old('fixingprice')}}" style="font-weight: bold;" value="" placeholder="#">
+                                
                             </div>
-                            
+                            @error('fixingprice') <p style="color: red; font-size: 12px;">{{$message}}</p> @enderror
+                            <div class="col-sm-8 col-md-10" style="padding: 8px;">
+                            <button class="btn btn-success" style="font-weight: bold; color: white">Approve Order</button>
+                            </div>
                         </div>
+                        
+                    </div>
                     
                 @endif
-            </form>
+            </form> -->
                 
                 <br><br>
 
@@ -247,19 +247,19 @@
                                         <button class="btn btn-danger" style="font-weight: bold; color: white">Decline</button>
                                     </form>
                                 @endif
-                                @if($userOrderDetails->status == '4')
-                                    <h3 style="font-weight: bold;">Take Actions</h3><br>
+                                @if($userOrderDetails->approvalStatus == '2')
+                                    <h3 style="font-weight: bold;"> Actions</h3><br>
 
                                     <form action="{{route('fixingDone', $userOrderDetails->remember_token)}}" method="post">
                                         @csrf
                                         @method('put')
                                         <button type="submit" class="btn btn-success" style="font-weight: bold; color: white">Done</button>
                                     </form>
-                                @elseif($userOrderDetails->status == '4' || $userOrderDetails->approval == '3')
+                                @elseif($userOrderDetails->status == '4' && $userOrderDetails->approval == '3')
                                         <h3 style="font-weight: bold;">Take Actions</h3><br>
                                         <button class="btn btn-success" style="font-weight: bold; color: white; backgroud-color: green;">Fixing Comleted</button>
 
-                                @elseif($userOrderDetails->status == '4' || $userOrderDetails->approval == '2')
+                                @elseif($userOrderDetails->status == '4' && $userOrderDetails->approval == '2')
                                         <br>
                                         <h2 style="color: darkgreen;">Fixing Completed</h2>
                                 @else

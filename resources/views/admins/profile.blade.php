@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admins.layout')
 
 @section('breadcrumb')
 <div class="page-breadcrumb">
@@ -26,7 +26,7 @@
         <div class="card-body">
                 <center class="m-t-30"> <img src="{{asset('customers/assets/images/users/5.jpg')}}"
                         class="rounded-circle" width="150" />
-                    <h4 class="card-title m-t-10">Full Name: Hanna Gover</h4>
+                    <h4 class="card-title m-t-10">Full Name: {{$data->fullname}}</h4>
                     <!-- <h6 class="card-subtitle">Accoubts Manager Amix corp</h6> -->
                     <!-- <div class="row text-center justify-content-md-center">
                         <div class="col-4"><a href="javascript:void(0)" class="link"><i
@@ -44,8 +44,8 @@
                 <hr>
             </div>
             <div class="card-body"> <small class="text-muted">Email address </small>
-                <h6>hannagover@gmail.com</h6> <small class="text-muted p-t-30 db">Phone</small>
-                <h6>+91 654 784 547</h6> <small class="text-muted p-t-30 db">Address</small>
+                <h6>{{$data->email}}</h6> <small class="text-muted p-t-30 db">Category</small>
+                <h6>{{$data->category}}</h6>
                 
             </div>
         </div>

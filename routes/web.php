@@ -138,14 +138,26 @@ Route::get('/admins/engineers', [AdminController::class, 'engineers'])->name('ad
 // To admin Order Details
 Route::get('/admins/riders', [AdminController::class, 'riders'])->name('admin.riders');
 
+// To admin Approve Engineer Table
+Route::get('/admins/approve/engineer', [AdminController::class, 'approveEngineer'])->name('approve.engineer');
+
+// To admin Approve Engineer Details
+Route::get('/admins/approve/engineer/{remember_token}', [AdminController::class, 'approveEngineerView'])->name('approveView.engineer');
+
+// To admin Approve Engineer Update
+Route::put('/admins/approve/update/{remember_token}', [AdminController::class, 'approveEngineerUpdate'])->name('approveEngineerUpdate');
+
 // // To admin Profile
 // Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
 
 // // To Done fixing and Approval
 // Route::post('/admin/fixingdone/{remember_token}', [AdminController::class, 'fixingDone'])->name('fixingDone');
 
-// // To All Pending
-// Route::get('/Pending/', [AdminController::class, 'allPending'])->name('allPending');
+// To All Pending
+Route::get('Admin/Pending/', [AdminController::class, 'allPending'])->name('allPendings');
+
+// To admin Profile
+Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
 
 // // To All Done
 // Route::get('/Done/', [AdminController::class, 'allDone'])->name('allDone');
@@ -184,8 +196,12 @@ Route::get('/admin/add_engineer', [AdminController::class, 'addEngineer'])->name
 // To Edit Added Engineer
 Route::get('/admin/edit_add_engineer/{engineerToken}/{engineersName}', [AdminController::class, 'editAddEngineer'])->name('admin.editAddEngineer');
 
-/// To Admin Add Engineer Store
-// Route::post('/admin/add_engineer_Store', [AdminController::class, 'addEngineerStore'])->name('admin.addEngineerStore');
+// / To Admin Add Engineer Store
+Route::post('/admin/add_engineer_Store', [AdminController::class, 'addEngineerStore'])->name('admin.addEngineerStore');
+
+
+// To admin Send Price
+Route::put('/approve/customerorder/fixprice/{fixpricetoken}', [AdminController::class, 'updatePrice'])->name('engineer.deviceFixPrice');
 
 // To Deleting Engineer From List
 Route::delete('/admin/deletingEngineer/{engineerToken}/{engineersName}', [AdminController::class, 'deleteEngineer'])->name('admin.deleteEngineer');
@@ -244,8 +260,6 @@ Route::get('/engineers/orderdetails', [EngineerController::class, 'orderdetails'
 // To engineer Profile
 Route::get('/engineer/profile', [EngineerController::class, 'profile'])->name('engineer.profile');
 
-// To admin Profile
-Route::get('/engineer/profile', [EngineerController::class, 'profile'])->name('admin.profile');
 // To Done fixing and Approval
 Route::put('/engineer/fixingdone/{remember_token}', [EngineerController::class, 'fixingDone'])->name('fixingDone');
 
@@ -263,19 +277,14 @@ Route::get('/awaitingResponse/', [EngineerController::class, 'allAwaitingRespons
 // To admin Single Page
 Route::get('/engineer/view/customerorder/{remember_token}', [EngineerController::class, 'singlePages'])->name('engineer.viewSingle');
 
-// To admin Single Page
-Route::get('/engineer/view/customerorder/{remember_token}', [EngineerController::class, 'singlePages'])->name('engineer.viewSingle');
-
 // To View Orders
 Route::get('/engineer/Neworders', [EngineerController::class, 'newOrders'])->name('engineer.newOrders');
 
 // To View Orders
 Route::get('/engineer/all_done_order', [EngineerController::class, 'doneOrders'])->name('engineer.doneOrders');
 
-// To admin Send Price
-Route::put('/engineer/view/customerorder/fixprice/{fixpricetoken}', [EngineerController::class, 'updatePrice'])->name('engineer.deviceFixPrice');
 // To Verify Payment Manually
-Route::put('/Verifyiny_Payment/{remember_token}', [EngineerController::class, 'verifyPayment'])->name('order.verify');
+Route::put('/Verifying_Payment/{remember_token}', [EngineerController::class, 'verifyPayment'])->name('order.verify');
 // To Approve Order
 Route::put('/engineer/Approved/order/{remember_token}', [EngineerController::class, 'aprroveOrder'])->name('Approve');
 
@@ -322,9 +331,14 @@ Route::get('/rider/profile', [RiderController::class, 'profile'])->name('rider.p
 // ->middleware('alreadyLoggedIn')
 
 Route::get('/login', [CustomAuthController::class, 'login'])->name('auth.login');
+Route::get('/login/engineer', [CustomAuthController::class, 'loginAsEngineer'])->name('auth.engineer');
 Route::get('/signup', [CustomAuthController::class, 'registration'])->name('auth.registration');
+Route::get('/forgot_password', [CustomAuthController::class, 'forgotPassword'])->name('auth.forgotpassword');
+Route::get('/forgotten/password/reset/{token}', [CustomAuthController::class, 'showResetForm'])->name('auth.reset.password.form');
+Route::post('password/forgotten/reset', [CustomAuthController::class, 'sendResetLink'])->name('auth.reset.pwrds.link');
 Route::post('/register-user', [CustomAuthController::class, 'registerUser'])->name('auth.register-user');
 Route::post('/login-user', [CustomAuthController::class, 'loginUser'])->name('login-user');
+Route::post('/signing/engineer', [CustomAuthController::class, 'loginEngineer'])->name('auth.engineer.login');
 // To Add Engineer Store
 Route::post('/admin/add_engineer_Store', [CustomAuthController::class, 'addEngineerStore'])->name('addEngineerStore');
 Route::get('/logout', [CustomAuthController::class, 'logout'])->name('logout');
@@ -336,10 +350,5 @@ Route::get('/logout', [CustomAuthController::class, 'logout'])->name('logout');
 // Custom Authentication Section Section End
 // ============================================================================
 // ============================================================================
-
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
 
 // require __DIR__.'/auth.php';

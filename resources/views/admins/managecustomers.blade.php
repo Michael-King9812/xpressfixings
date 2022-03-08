@@ -39,6 +39,7 @@
                             <tr>
                                 <!-- <th scope="col">#</th> -->
                                 <th scope="col">Email</th>
+                                <th scope="col">Time</th>
                                 <th scope="col">Phone Number</th>
                                 <th scope="col">Device Type</th>
                                 <th scope='col'>Status</th>
@@ -57,6 +58,7 @@
                                 <tr>
                                     <!-- <th scope="row"></th> -->
                                     <td>{{ $orderdetail->email }}</td>
+                                    <td>{{ $orderdetail->created_at->diffForHumans() }}</td>
                                     <td>{{ $orderdetail->phone }}</td>
                                     <td>{{ $orderdetail->deviceType }}</td>
                                     <!-- <td><span class="label label-primary">Pending</span></td> -->
@@ -70,7 +72,7 @@
                                             echo "<td><span style='font-weight: bold; color: blue; font-weight: bold;' class='label'>Delivered</span></td>";
                                         }
                                         elseif ($orderdetail->status == '2') {
-                                            echo "<td><span style='font-weight: bold; color: green; font-weight: bold;' class='label'>Done</span></td>";
+                                            echo "<td><span style='font-weight: bold; color: green; font-weight: bold;' class='label'>Completed</span></td>";
 
                                         }
                                         elseif ($orderdetail->status == '4' && $orderdetail->approval == '1' && $orderdetail->approvalStatus == '1') {

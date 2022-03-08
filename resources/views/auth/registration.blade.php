@@ -91,6 +91,9 @@
 
 					<div class="txt1 text-center p-t-54 p-b-20">
 						<span>
+							<a href="{{route('engineer.signup')}}" style="font-size: 15px;">Signup as an Engineer Here!</a><br><br>
+						</span><br><br>
+						<span>
 							<a href="{{route('index')}}"><span style="font-weight: bold; font-size: 20px;">&laquo;</span> Back Home</a><br><br>
 						</span>
 						<span>
@@ -113,7 +116,9 @@
 					</div>
 
 				
-				</form>
+				</form><br><br><br>
+
+<center><span style="font-size: 12px; font-wigth: bold;">All right reserved. <?php echo Date('Y'); ?> @ <a href="xpressfixing.com">Xpressfixing</a></span></center>
 			</div>
 		</div>
 	</div>

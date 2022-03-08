@@ -64,6 +64,8 @@
                                 <h6>{{ $userOrderDetails->currentState }}</h6> 
                                 <small class="text-muted p-t-30 db">Current City</small>
                                 <h6>{{ $userOrderDetails->currentCity }}</h6> 
+                                <small class="text-muted p-t-30 db">Time</small>
+                                <h6>{{ $userOrderDetails->created_at->diffForHumans() }}</h6> 
                                 <small class="text-muted p-t-30 db">Status</small>
                                 <h6>
                                     <?php    
@@ -200,60 +202,109 @@
     </div>
     <!-- Column -->
     <!-- Column -->
-    <div class="col-lg-6     col-xlg-9 col-md-7">
+    <div class="col-lg-6  col-xlg-9 col-md-7">
+        
         <div class="card">
             <div class="card-body">
-                <small class="text-muted p-t-30 db">Assigned Engineer</small>
-                <h6>
-                    <tr>
-                        <td><span style="color: green; font-weight: bold;">{{ $assignedEngineer->fullname }} </span> </td>
-                    </tr>
-                </h6>
-                <small class="text-muted p-t-30 db">Engineer Phone </small>
-                <h6>
-                    <tr>
-                        <td><span style="color: green; font-weight: bold;">{{$assignedEngineer->phoneNumber}}</span> </td>
-                    </tr>
-                </h6>
+                @if($userOrderDetails->status == '0' && $userOrderDetails->assignedEngineer == "") 
+
+                <form action="{{route('engineer.deviceFixPrice', $userOrderDetails->remember_token)}}" method="post" class="form-horizontal form-material mx-2">            
+                            @csrf
+                            @method('put') 
                 
-                <small class="text-muted p-t-30 db">Engineers Email</small>
-                <h6>
-                    <tr>
-                        <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->email}}</span> </td>
-                    </tr>
-                </h6> 
-                
-                <small class="text-muted p-t-30 db">Engineers Location</small>
-                <h6>
-                    <tr>
-                        <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->address}}</span> </td>
-                    </tr>
-                </h6> 
+                @if($userOrderDetails->status != '4' && $userOrderDetails->approval != '1' && $userOrderDetails->status != '2')
+                        <p style="color: green; font-size: 14px;">&nbsp; &nbsp;<i class="fas fa-check" aria-hidden="true"></i> Active</p>
+                    @if(Session::has('success'))
+                        <div id="msg" class="alert alert-success">{{ Session::get('success')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div id="msg" class="alert alert-danger">{{ Session::get('fail')}}</div>
+                    @endif
 
-                <small class="text-muted p-t-30 db">Engineers City</small>
-                <h6>
-                    <tr>
-                        <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->city}}</span> </td>
-                    </tr>
-                </h6> 
 
-                <small class="text-muted p-t-30 db">Engineers State</small>
-                <h6>
-                    <tr>
-                        <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->state}}</span> </td>
-                    </tr>
-                </h6> 
 
-                @if($userOrderDetails->status != '0')
-                <small class="text-muted p-t-30 db">Fixing Price</small>
-                <h6>
-                    <tr>
-                        <td><span style="color: green; font-weight: bold;">#{{$userOrderDetails->deviceFixPrice}}</span> </td>
-                    </tr>
-                </h6>
+                    <h3 style="font-weight: bold;">Assign Price</h3>
+                    <div class="form-group">
+                        
+                        <div class="col-sm-10 col-md-12">
+                            <label class="col-sm-12 col-md-10" style="font-weight: bold;">Enter Price Here:</label>
+                            <div class="col-sm-6 col-md-6">
+                                <input class="shadow-none form-control" name="fixingprice" value="{{$userOrderDetails->deviceFixPrice}}" value="{{old('fixingprice')}}" style="font-weight: bold;" value="" placeholder="#">
+                                
+                            </div>
+                            @error('fixingprice') <p style="color: red; font-size: 12px;">{{$message}}</p> @enderror
+                            <div class="col-sm-8 col-md-10" style="padding: 8px;">
+                            <button class="btn btn-success" style="font-weight: bold; color: white">Approve Order</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
                 @endif
-                
+            </form>
+
+                @endif
+
+                @if($userOrderDetails->assignedEngineer != "")
+                    <small class="text-muted p-t-30 db">Assigned Engineer</small>
+                    <h6>
+                        <tr>
+                            <td><span style="color: green; font-weight: bold;">{{ $assignedEngineer->fullname }} </span> </td>
+                        </tr>
+                    </h6>
+                    <small class="text-muted p-t-30 db">Engineer Phone </small>
+                    <h6>
+                        <tr>
+                            <td><span style="color: green; font-weight: bold;">{{$assignedEngineer->phoneNumber}}</span> </td>
+                        </tr>
+                    </h6>
+                    
+                    <small class="text-muted p-t-30 db">Engineers Email</small>
+                    <h6>
+                        <tr>
+                            <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->email}}</span> </td>
+                        </tr>
+                    </h6> 
+                    
+                    <small class="text-muted p-t-30 db">Engineers Location</small>
+                    <h6>
+                        <tr>
+                            <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->address}}</span> </td>
+                        </tr>
+                    </h6> 
+
+                    <small class="text-muted p-t-30 db">Engineers City</small>
+                    <h6>
+                        <tr>
+                            <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->city}}</span> </td>
+                        </tr>
+                    </h6> 
+
+                    <small class="text-muted p-t-30 db">Engineers State</small>
+                    <h6>
+                        <tr>
+                            <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->state}}</span> </td>
+                        </tr>
+                    </h6> 
+                    
+                    <small class="text-muted p-t-30 db">Order Time</small>
+                    <h6>
+                        <tr>
+                            <td><span style="color: purple; font-weight: bold;">{{ $userOrderDetails->created_at->diffForHumans() }}</span> </td>
+                        </tr>
+                    </h6> 
+
+                    @if($userOrderDetails->status != '0')
+                    <small class="text-muted p-t-30 db">Fixing Price</small>
+                    <h6>
+                        <tr>
+                            <td><span style="color: green; font-weight: bold;">#{{$userOrderDetails->deviceFixPrice}}</span> </td>
+                        </tr>
+                    </h6>
+                    @endif
+                @endif
             </div>
+            
         </div>
     </div>
     <!-- Column -->

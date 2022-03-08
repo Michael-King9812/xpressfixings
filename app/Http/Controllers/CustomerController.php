@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\CustomAuthController;
 use Session;
 use App\Models\User;
+use App\Models\State;
 use App\Models\Orderdetail;
 use App\Models\PossibleProblems;
 use App\Events\SendPosition;
@@ -32,13 +33,14 @@ class CustomerController extends Controller
         $data = array();
         $orderDetails = orderdetail::all()->where('user_id','=', Session::get('UserLoginId'));
         $allProblems = PossibleProblems::all();
+        $allStates = State::all();
         $allEngineers = Engineer::where('state',$state)->get();
 
         if (Session::has('UserLoginId')) {
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
         }
         
-        return view('customers.xpress', compact(['data','orderDetails', 'allEngineers', 'allProblems']));
+        return view('customers.xpress', compact(['data','orderDetails', 'allEngineers', 'allProblems','allStates']));
     }
 
 
@@ -81,7 +83,6 @@ class CustomerController extends Controller
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
-            // echo $response;
             $new_data = json_decode($response);
 
 
@@ -92,7 +93,6 @@ class CustomerController extends Controller
             $order->approval = '2';
 
             $ordered = $order->save();
-            // dd("Your Validation is successful");
 
             if ($ordered) {
                 return redirect()->back()->with('success', 'Payment and Approval Successfully.');
@@ -108,6 +108,7 @@ class CustomerController extends Controller
     public function orderdetailss($token) {
         $data = array();
         $orderDetails = Orderdetail::where('remember_token', $token)->first();
+        $allStates = State::all();
 
         if (Session::has('UserLoginId')) {
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
@@ -118,7 +119,7 @@ class CustomerController extends Controller
         $allEngineers = Engineer::where('state',$state)->get();
         $assignedEngineer = Engineer::where('remember_token', $orderDetails->assignedEngineer)->first();
 
-        return view('customers.orderdetailss', compact(['data','allEngineers','orderDetails','assignedEngineer']));
+        return view('customers.orderdetailss', compact(['data','allEngineers','orderDetails','assignedEngineer','allEngineers']));
     }
 
 
@@ -136,7 +137,8 @@ class CustomerController extends Controller
 
     public function getEngineersByState($state)
     {
-        $engineersData = Engineer::where('state', $state)->get();
+        $engineersData = Engineer::where('state', $state)
+                    ->where('status','=','1')->get();
         return response()->json($engineersData);
     }
 
@@ -164,7 +166,6 @@ class CustomerController extends Controller
             'problemcategory' => 'required',
             'currentstate' => 'required',
             'currentcity' => 'required',
-            'selectEngineer' => 'required'
         ]);
 
         $data = array();
@@ -188,9 +189,7 @@ class CustomerController extends Controller
         $complain = $request->input('complain');
         $currentState = $request->input('currentstate');
         $currentCity = $request->input('currentcity');
-        $selectEngineer = $request->input('selectEngineer');
 
-        // dd($request->_token);
 
         $order = new Orderdetail();
         $order->fullName = $fullName;
@@ -204,7 +203,6 @@ class CustomerController extends Controller
         $order->status = "0";
         $order->problemCategory = $problemCategory;
         $order->currentCity = $currentCity;
-        $order->assignedEngineer = $selectEngineer;
         $order->currentState = $currentState;
         $order->remember_token = Str::random(32);
 

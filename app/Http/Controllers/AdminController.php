@@ -77,6 +77,47 @@ class AdminController extends Controller
         }
         return view('admins.manageengineers', compact('data'));
     }
+    
+
+    
+    public function approveEngineer() {
+        $data = array();
+        if (Session::has('UserLoginId')) {
+            $data = User::where('id','=', Session::get('UserLoginId'))->first();
+        }
+
+        $addEngineer = Engineer::where('status','0')->get();
+
+        return view('admins.approveengineers', compact('data','addEngineer'));
+    }
+
+    public function approveEngineerView($token) {
+        $data = array();
+        if (Session::has('UserLoginId')) {
+            $data = User::where('id','=', Session::get('UserLoginId'))->first();
+        }
+        $engineerDetails = Engineer::where('remember_token','=',$token)->first();
+
+        return view('admins.approve_engineer_details', compact('data','engineerDetails'));
+    }
+
+
+public function approveEngineerUpdate(Request $request, $token) {
+        
+        $engineerDetails = Engineer::where('remember_token','=',$token)->first();
+     
+
+        $engineerDetails->status = "1"; 
+
+        $approvedEngineer = $engineerDetails->save();
+
+        if ($approvedEngineer) {
+            return redirect('admins/approve/engineer')->with('success', $engineerDetails->fullname.' approved as an Engineer successfully.');
+        } else {
+            return redirect()->back()->with('fail', 'Engineer approval failed.');
+        }
+    }
+
 
     public function riders() {
         $data = array();
@@ -157,7 +198,7 @@ class AdminController extends Controller
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
         }
 
-        $addEngineer = Engineer::all();
+        $addEngineer = Engineer::where('status','=','1')->get();
 
         return view('admins.addengineer', compact('data','addEngineer'));
     } 
@@ -179,8 +220,6 @@ class AdminController extends Controller
         $engineerAddress = $request->input('engineer_address');
         $engineerState = $request->input('engineer_state');
         $engineerToken = $request->_token;
-
-        // dd($request->_token);
 
 
         $engineerModel = new Engineer();
@@ -230,8 +269,6 @@ class AdminController extends Controller
         $engineerState = $request->input('engineer_state');
         $engineerToken = $request->_token;
 
-        // dd($request->_token);
-
 
         $engineerModel = Engineer::where('remember_token',$token);
 
@@ -254,9 +291,6 @@ class AdminController extends Controller
 
     public function deleteEngineer($token, $engineerName)
     {
-        
-
-        // dd($token);
         $engineerDelete = Engineer::where('remember_token', $token)->first();
 
         $deleteEngineer = $engineerDelete->delete();
@@ -264,7 +298,7 @@ class AdminController extends Controller
         if ($deleteEngineer) {
             return redirect()->back()->with('success', $engineerName.' Deleted Successfully.');
         } else {
-            return redirect()->back()->with('fail', 'An Error Occured in Deleting Engineer.');
+            return redirect()->back()->with('fail', 'An error occured in deleting engineer.');
         }
        
     }
@@ -339,11 +373,9 @@ class AdminController extends Controller
     }
 
 
-
     public function updatePrice(Request $request, $token)
     {
         $request->validate([
-            'engineer_assigned' => 'required',
             'fixingprice'=>'required'
         ]);
         
@@ -353,7 +385,6 @@ class AdminController extends Controller
         $fixPrice->status = "4"; 
         $fixPrice->approval = "1";
         $fixPrice->deviceFixPrice = $request->input('fixingprice');
-        $fixPrice->assignedEngineer = $request->input('engineer_assigned');
 
         $updateFixPrice = $fixPrice->save();
 

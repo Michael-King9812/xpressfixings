@@ -21,10 +21,10 @@
 @section('main')
     <div class="row">
         <!-- Column -->
-        <div class="col-lg-4 col-xlg-3 col-md-5">
-                        <div class="card">
+        <!-- <div class="col-lg-4 col-xlg-3 col-md-5"> -->
+                        <!-- <div class="card">
                             <div class="card-body">
-                                <form action="{{route('admin.addEngineerStore')}}" method="post" class="form-horizontal form-material mx-2">
+                                <form action="" method="post" class="form-horizontal form-material mx-2">
                                     @csrf
                                     <div class="form-group">
                                         <label class="col-md-12" style="font-weight: bold;">Engieer Name:</label>
@@ -86,14 +86,14 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Column -->
                    
         <!-- Column -->
-        <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="col-lg-12 col-xlg-12 col-md-12">
             <div class="card">
                 <div class="card-body"> 
-                    <h4 style="font-weight: bold;">List of Possible Problems</h4>
+                    <h4 style="font-weight: bold;">List of Engineers</h4>
                     @if(Session::has('success'))
                         <div id="msg" style="font-weight: bold; text-align: center;" class="alert alert-success">{{ Session::get('success')}}</div>
                     @endif
@@ -124,10 +124,10 @@
                                     <td>{{ $EngineerDetails->state }}</td>
                                     
                                         <td>
-                                            <a href="{{route('admin.editAddEngineer', [$EngineerDetails->remember_token, $EngineerDetails->fullname])}}">
+                                            <!-- <a href="{{route('admin.editAddEngineer', [$EngineerDetails->remember_token, $EngineerDetails->fullname])}}">
                                                 
                                                 <button class="btn btn-primary" style="color: white; border-radius: 50%;"><i class="fa fa-eye"></i></button>                                       
-                                            </a>
+                                            </a> -->
                                         </td>   
                                         <td>
                                             <form action="{{route('admin.deleteEngineer', [$EngineerDetails->remember_token, $EngineerDetails->fullname])}}" method="post">

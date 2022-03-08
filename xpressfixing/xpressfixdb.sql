@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2022 at 07:47 AM
+-- Generation Time: Mar 05, 2022 at 07:10 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.7
 
@@ -35,6 +35,7 @@ CREATE TABLE `engineers` (
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -45,12 +46,12 @@ CREATE TABLE `engineers` (
 -- Dumping data for table `engineers`
 --
 
-INSERT INTO `engineers` (`id`, `fullname`, `phoneNumber`, `email`, `address`, `city`, `state`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Damilola Samuel', '08108375627', 'damilolasamuel@gmail.com', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis ratione harum doloremque amet, iusto similique vel deserunt, facere inventore sit quo officia in est. Ipsum quasi ullam officiis esse dolorem.', 'Oshogbo', 'Osun', '$2y$10$R4Hgnvc2OMVjdWizKBpBF.r/RKY5ZdKup.2n3dUslJin3c4blQYTe', 'TqNUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFKlJ', '2022-02-28 21:34:02', '2022-02-28 21:34:02'),
-(2, 'Blessing Ikwein', '07039756352', 'ikweinblessing@gmail.com', 'consectetur adipisicing elit. Veritatis ratione harum doloremque amet, iusto similique vel deserunt, facere inventore Lorem ipsum, dolor sit amet  sit quo officia in est. Ipsum quasi ullam officiis esse dolorem.', 'Ijebu Ode', 'Osun', '$2y$10$xl7HJNHMJ7gkO17zlFeR2uevO2VYxOnGfDCIffhuuWBqr2BP8GrG.', 'wioup35TYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFKlJ', '2022-02-28 22:23:59', '2022-02-28 22:23:59'),
-(3, 'Oki Emmanuel', '08054679749', 'okiemmanuel@gmail.com', 'quasi ullam officiis esse dolorem. consectetur adipisicing elit. Veritatis ratione harum doloremque amet, iusto similique vel deserunt, facere inventore Lorem ipsum, dolor sit amet  sit quo officia in est. Ipsum', 'Sokoto', 'Sokoto', '$2y$10$UAskC3zC7wj6ewuBZ8zwF.lFr3JCUgV.b7FRs.BYdeT2tLpj19mji', 'TOITUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFKlJJW', '2022-02-28 22:30:28', '2022-02-28 22:30:28'),
-(5, 'Benjamin Johnson', '08054679749', 'Johnsonben@gmail.com', 'quasi ullam officiis esse dolorem. consectetur adipisicing elit. Veritatis ratione harum doloremque amet, iusto similique vel deserunt, facere inventore Lorem ipsum, dolor sit amet  sit quo officia in est. Ipsum', 'Jos', 'Plateu', '$2y$10$Dt3fnHl1jKCmcD8PQXECIO1cLbNoVw3AkUHxF7BHVgKq4AQzhQjm2', 'TqNUIcTYbSmVMEqEEZE58AZ0Ukz7sfAhFKlJ', '2022-02-28 22:32:19', '2022-02-28 22:32:19'),
-(6, 'Abraham Ossai', '09082305867', 'abrahamgreatebele@gmail.com', 'No 31, Palm Street Extension, Calabar', 'Ilorin', 'Kwara', '$2y$10$pRxeKwCOTABjgrDteAH/gOvPbyGwmlmbO/oTCs7GefzpJXwZq0oWy', 'uiowpetkUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFnks', '2022-02-28 22:37:07', '2022-02-28 22:37:07');
+INSERT INTO `engineers` (`id`, `fullname`, `phoneNumber`, `email`, `address`, `city`, `state`, `status`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Damilola Samuel', '08108375627', 'damilolasamuel@gmail.com', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis ratione harum doloremque amet, iusto similique vel deserunt, facere inventore sit quo officia in est. Ipsum quasi ullam officiis esse dolorem.', 'Oshogbo', 'Osun', 0, '$2y$10$R4Hgnvc2OMVjdWizKBpBF.r/RKY5ZdKup.2n3dUslJin3c4blQYTe', 'TqNUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFKlJ', '2022-02-28 21:34:02', '2022-02-28 21:34:02'),
+(2, 'Blessing Ikwein', '07039756352', 'ikweinblessing@gmail.com', 'consectetur adipisicing elit. Veritatis ratione harum doloremque amet, iusto similique vel deserunt, facere inventore Lorem ipsum, dolor sit amet  sit quo officia in est. Ipsum quasi ullam officiis esse dolorem.', 'Ijebu Ode', 'Osun', 1, '$2y$10$xl7HJNHMJ7gkO17zlFeR2uevO2VYxOnGfDCIffhuuWBqr2BP8GrG.', 'wioup35TYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFKlJ', '2022-02-28 22:23:59', '2022-02-28 22:23:59'),
+(3, 'Oki Emmanuel', '08054679749', 'okiemmanuel@gmail.com', 'quasi ullam officiis esse dolorem. consectetur adipisicing elit. Veritatis ratione harum doloremque amet, iusto similique vel deserunt, facere inventore Lorem ipsum, dolor sit amet  sit quo officia in est. Ipsum', 'Sokoto', 'Sokoto', 0, '$2y$10$UAskC3zC7wj6ewuBZ8zwF.lFr3JCUgV.b7FRs.BYdeT2tLpj19mji', 'TOITUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFKlJJW', '2022-02-28 22:30:28', '2022-02-28 22:30:28'),
+(5, 'Benjamin Johnson', '08054679749', 'Johnsonben@gmail.com', 'quasi ullam officiis esse dolorem. consectetur adipisicing elit. Veritatis ratione harum doloremque amet, iusto similique vel deserunt, facere inventore Lorem ipsum, dolor sit amet  sit quo officia in est. Ipsum', 'Jos', 'Plateu', 0, '$2y$10$Dt3fnHl1jKCmcD8PQXECIO1cLbNoVw3AkUHxF7BHVgKq4AQzhQjm2', 'TqNUIcTYbSmVMEqEEZE58AZ0Ukz7sfAhFKlJ', '2022-02-28 22:32:19', '2022-02-28 22:32:19'),
+(6, 'Abraham Ossai', '09082305867', 'abrahamgreatebele@gmail.com', 'No 31, Palm Street Extension, Calabar', 'Ilorin', 'Kwara', 1, '$2y$10$pRxeKwCOTABjgrDteAH/gOvPbyGwmlmbO/oTCs7GefzpJXwZq0oWy', 'uiowpetkUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFnks', '2022-02-28 22:37:07', '2022-02-28 22:37:07');
 
 -- --------------------------------------------------------
 
@@ -144,7 +145,8 @@ INSERT INTO `orderdetails` (`id`, `email`, `user_id`, `fullName`, `phone`, `devi
 (2, 'samuelsmith@gmail.com', 7, 'Samuel Smith', '08108554110', 'Phone', 'Samsumg S8', '346785878623', 'Flash Light', 'uiowpetkUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFnks', NULL, 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla laudantium, distinctio voluptatem, possimus magni nostrum reprehenderit totam aperiam at vitae perferendis veritatis. Pariatur architecto, numquam esse voluptas ratione aliquam earum?', '0', 0, NULL, 0, NULL, '0', NULL, NULL, NULL, 'Ilorin', 'Kwara', 'F7m0maOm42WUKrqP8p44ukHVumLx7LGT', '2022-03-02 02:03:30', '2022-03-02 02:03:30'),
 (3, 'samuelsmith@gmail.com', 7, 'Samuel Smith', '08108554110', 'Laptop', 'DESKTOP 580XC', '345678907890', 'IC', 'TqNUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFKlJ', NULL, 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla laudantium, distinctio voluptatem, possimus magni nostrum reprehenderit totam aperiam at vitae perferendis veritatis. Pariatur architecto, numquam esse voluptas ratione aliquam earum?', '0', 0, NULL, 0, NULL, '0', NULL, NULL, NULL, 'Delta', 'Osun', 'iSqAODmk86V8zi5gjlXrCiWmcvkZoQiM', '2022-03-02 02:10:34', '2022-03-02 02:10:34'),
 (4, 'danielmatthew@gmail.com', 4, 'Daniel Mathew', '08108554110', 'Laptop', 'Samsumg S8', '345678907890', 'KeyPad', 'uiowpetkUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFnks', NULL, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque minima temporibus deserunt illum, asperiores voluptatem cupiditate excepturi consequatur fuga nulla dicta impedit fugit autem pariatur rerum saepe sequi vero itaque!', '3', 1, NULL, 0, '10', '0', NULL, NULL, NULL, 'Ilorin', 'Kwara', 'HoiWV0a53cIIwLAFROnNI6oFfbC6uP37', '2022-03-03 04:34:01', '2022-03-03 04:42:23'),
-(5, 'danielmatthew@gmail.com', 4, 'Daniel Mathew', '07054977409', 'Phone', 'Samsumg S8', '346785878623', 'Broken Screen', 'uiowpetkUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFnks', NULL, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus ullam ducimus eos optio, hic dolorum temporibus ratione commodi eum ipsa nulla, earum voluptatibus placeat maxime accusamus. Autem, modi rem. Temporibus!', '2', 2, 'storage\\Payment_Proof_Upload_Images\\paid\\paid-g21daab019_640.png', 2, '10', '0', NULL, NULL, NULL, 'tyug', 'Kwara', 'jNcKZoycsnyMtuDq1XBtaXZKmwMqCb89', '2022-03-03 05:01:08', '2022-03-03 05:39:46');
+(5, 'danielmatthew@gmail.com', 4, 'Daniel Mathew', '07054977409', 'Phone', 'Samsumg S8', '346785878623', 'Broken Screen', 'uiowpetkUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFnks', NULL, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus ullam ducimus eos optio, hic dolorum temporibus ratione commodi eum ipsa nulla, earum voluptatibus placeat maxime accusamus. Autem, modi rem. Temporibus!', '2', 2, 'storage\\Payment_Proof_Upload_Images\\paid\\paid-g21daab019_640.png', 2, '10', '0', NULL, NULL, NULL, 'tyug', 'Kwara', 'jNcKZoycsnyMtuDq1XBtaXZKmwMqCb89', '2022-03-03 05:01:08', '2022-03-03 05:39:46'),
+(6, 'okiemmanuel@gmail.com', 9, 'Emmanuel Oki', '07054977409', 'Phone', 'Samsumg S8', '36332768278387', 'others', 'uiowpetkUIcTYbnjHYSmVMEqEEZE58AZ0Ukz7sfAhFnks', NULL, 'lorem ospasj s ksja; dfj sfjlsa', '0', 0, NULL, 0, NULL, '0', NULL, NULL, NULL, 'Maimuna', 'Kwara', 'WrKhyJgOTdul6GBcLX6PYDpH62W32mLx', '2022-03-05 12:09:59', '2022-03-05 12:09:59');
 
 -- --------------------------------------------------------
 
@@ -284,7 +286,8 @@ INSERT INTO `users` (`id`, `fullname`, `category`, `email`, `password`, `remembe
 (4, 'Daniel Mathew', 'customer', 'danielmatthew@gmail.com', '$2y$10$Z6QTTd6J8/bNFTk1QE0hCOgEB.Bk0RjIkEEZC.Inz8Mvpusqk62ji', NULL, '2022-01-24 14:15:21', '2022-01-24 14:15:21'),
 (6, 'Michael King', 'engineer', 'kingmichael872@gmail.com', '$2y$10$YLYXqTgLUWwj2nER1BlxQ.Grqw9GmBui1FMm7qY9ryP5iE3J.guXy', NULL, '2022-01-26 09:57:46', '2022-01-26 09:57:46'),
 (7, 'Samuel Smith', 'customer', 'samuelsmith@gmail.com', '$2y$10$uAmN8yBXljs8LZQR9uiZouL9ilIEJQdEnOB7/5WajNIRPSZaBbpyW', NULL, '2022-01-29 00:43:16', '2022-01-29 00:43:16'),
-(8, 'Michael Aranmonise', 'customer', 'Kingmichael98@gmail.com', '$2y$10$bgY1Covv6aaZtNa/hHRsJOJP5RP7.e7maMIwZcgAtfsHqGIcJ78ja', NULL, '2022-02-01 01:22:59', '2022-02-01 01:22:59');
+(8, 'Michael Aranmonise', 'customer', 'Kingmichael98@gmail.com', '$2y$10$bgY1Covv6aaZtNa/hHRsJOJP5RP7.e7maMIwZcgAtfsHqGIcJ78ja', NULL, '2022-02-01 01:22:59', '2022-02-01 01:22:59'),
+(9, 'Emmanuel Oki', 'customer', 'okiemmanuel@gmail.com', '$2y$10$oM4RDMDd9Fyl6gE4xix3qOBW780143zm.EmEN8b73YxwUKLncKWwW', NULL, '2022-03-05 11:06:01', '2022-03-05 11:06:01');
 
 --
 -- Indexes for dumped tables
@@ -371,7 +374,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `engineers`
 --
 ALTER TABLE `engineers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -389,7 +392,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -425,7 +428,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
