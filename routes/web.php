@@ -336,6 +336,7 @@ Route::get('/signup', [CustomAuthController::class, 'registration'])->name('auth
 Route::get('/forgot_password', [CustomAuthController::class, 'forgotPassword'])->name('auth.forgotpassword');
 Route::get('/forgotten/password/reset/{token}', [CustomAuthController::class, 'showResetForm'])->name('auth.reset.password.form');
 Route::post('password/forgotten/reset', [CustomAuthController::class, 'sendResetLink'])->name('auth.reset.pwrds.link');
+Route::post('password/reset', [CustomAuthController::class, 'resetPassword'])->name('user.reset.password');
 Route::post('/register-user', [CustomAuthController::class, 'registerUser'])->name('auth.register-user');
 Route::post('/login-user', [CustomAuthController::class, 'loginUser'])->name('login-user');
 Route::post('/signing/engineer', [CustomAuthController::class, 'loginEngineer'])->name('auth.engineer.login');

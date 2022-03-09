@@ -155,28 +155,128 @@ class CustomAuthController extends Controller
     //     return view('auth.reset_pasword');
     // }
 
-    public function sendResetLink(Request $request) {
-        $request->validate([
-            'email'=>'required|email|exists:users,email'
-        ]);
+    public function showResetForm(Request $request, $tokens = null) {
+        
+        $token = $tokens; 
+        $email = $request->email;
+        return view('auth.reset_pasword',compact(['token', 'email']));
+    }
 
-        $token = \Str::random(64);
-        \DB::table('password_resets')->insert([
-            'email'=>$request->email,
-            'token'=>$token,
-            'created_at'=>Carbon::now(),
-        ]);
+    public function sendResetLink(Request $request) {  
+        $engineer = Engineer::where('email',$request->email)->first(); 
+        $user = User::where('email',$request->email)->first(); 
+        if($engineer) {
+            $request->validate([
+                'email'=>'required|email|exists:engineers,email'
+            ]);
+    
+            $token = \Str::random(64);
+            \DB::table('password_resets')->insert([
+                'email'=>$request->email,
+                'token'=>$token,
+                'created_at'=>Carbon::now(),
+            ]);
+    
+            $action_link = route('auth.reset.password.form', ['token'=>$token, 'email'=>$request->email]);
+            $body = "We have received a request to reset the password for <b>Xpressfixing</b> account associated with your email ".$request->email.",
+            you can now reset your password by clicking the link below.";
+    
+            \Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request) {
+                $message->from('support@xpressfixing.com', 'Xpressfixing');
+                $message->to($request->email, 'Michaelking')
+                        ->subject('Reset Password');
+            });
+        } elseif($user) {
+            $request->validate([
+                'email'=>'required|email|exists:users,email'
+            ]);
+    
+            $token = \Str::random(64);
+            \DB::table('password_resets')->insert([
+                'email'=>$request->email,
+                'token'=>$token,
+                'created_at'=>Carbon::now(),
+            ]);
+    
+            $action_link = route('auth.reset.password.form', ['token'=>$token, 'email'=>$request->email]);
+            $body = "We have received a request to reset the password for <b>Xpressfixing</b> account associated with your email ".$request->email.",
+            you can now reset your password by clicking the link below.";
+    
+            \Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request) {
+                $message->from('support@xpressfixing.com', 'Xpressfixing');
+                $message->to($request->email, 'Michaelking')
+                        ->subject('Reset Password');
+            });
+        } else {
+            
+        }
+        
+        return back()->with('success', 'We have sent your password reset link, kindly check your mail box '.$request->email);
+    }
 
-        $action_link = route('auth.reset.password.form', ['token'=>$token, 'email'=>$request->email]);
-        $body = "We have received a request to reset the password for <b>Xpress fixing</b> account associated with ".$request->email.",
-        you can now reset your password by clicking the link below.";
+    public function resetPassword(Request $request) {
+        $engineer = Engineer::where('email',$request->email)->first(); 
+        $user = User::where('email',$request->email)->first(); 
+        if($engineer) {
+            $request->validate([
+                'email'=>'required|email|exists:engineers,email',
+                'new_password'=>'required|min:6|max:15|same:confirm_password',
+                'confirm_password'=>'required|min:6|max:15',
+            ]);
+    
+            
+    
+            $check_token = \DB::table('password_resets')->where([
+                'email'=>$request->email,
+                'token'=>$request->token,
+            ])->first();   
+    
+            if (!$check_token) {
+                return back()->with('fail','Invalid token');
+            } else {
+                Engineer::where('email',$request->email)->update([
+                    'password'=>Hash::make($request->new_password),
+                ]);
+    
+                \DB::table('password_resets')->where([
+                    'email'=>$request->email,
+                ])->delete();
+    
+                return redirect('/login/engineer')->with('success','Your password has been changed, you can now Login with you new password.');
+    
+            }
+        } elseif($user) {
+            $request->validate([
+                'email'=>'required|email|exists:users,email',
+                'new_password'=>'required|min:6|max:15|same:confirm_password',
+                'confirm_password'=>'required|min:6|max:15',
+            ]);
+    
+            
+    
+            $check_token = \DB::table('password_resets')->where([
+                'email'=>$request->email,
+                'token'=>$request->token,
+            ])->first();   
+    
+            if (!$check_token) {
+                return back()->with('fail','Invalid token');
+            } else {
+                User::where('email',$request->email)->update([
+                    'password'=>Hash::make($request->new_password),
+                ]);
+    
+                \DB::table('password_resets')->where([
+                    'email'=>$request->email,
+                ])->delete();
+    
+                return redirect('/login')->with('success','Your password has been changed, you can now Login with you new password.');
+    
+            }
+        } else {
 
-        \Mail::send('email-forgot',['action_link'=>$action_link,'body'=>$body], function($message) use ($request) {
-            $message->from('kingmichael9812@gmail.com', 'Xpressfixing');
-            $message->to($request->email, 'Michaelking')
-                    ->subject('Reset Password');
-        });
-        return back()->with('success', 'We have sent your password reset link, kindly check your Mail box.');
+        }
+        
     }
 
     public function logout()

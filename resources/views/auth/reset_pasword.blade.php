@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Xpressfix Login</title>
+	<title>Xpressfix Reset Password</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -33,7 +33,7 @@
 		<div class="container-login100" style="background-image: url('{{asset('images/bg-01.jpg')}}');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 
-				<form action="{{route('password.update')}}" method="POST" class="login100-form validate-form">
+				<form action="{{route('user.reset.password')}}" method="POST" class="login100-form validate-form">
 					@csrf
 					<span class="login100-form-title p-b-49">
 						Reset Password
@@ -49,28 +49,28 @@
 
 					
 
-					<input type="hidden" name="token" value="{{ $token }}>
+					<input type="hidden" name="token" value="{{ $token }}">
 
 					<div class="wrap-input100 validate-input" data-validate = "Email is required">
 						<span class="label-input100">Email</span>
-						<input class="input100" type="text" name="email" value="{{old('email')}}" placeholder="Enter your email">
+						<input class="input100" type="text" name="email" value="{{ $email ?? old('email') }}" placeholder="Enter your email">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<div class="m-b-23" style="color: darkred;">@error('email') {{$message}} @enderror</div>
 
-                    <div class="wrap-input100 validate-input" data-validate = "Email is required">
+                    <div class="wrap-input100 validate-input" data-validate = "Password is required">
 						<span class="label-input100">New Password</span>
-						<input class="input100" type="password" name="email" value="{{$email ?? old('email')}}" placeholder="Enter your email">
+						<input class="input100" type="password" name="new_password" value="{{old('new_password')}}" placeholder="Enter your email">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
-					<div class="m-b-23" style="color: darkred;">@error('email') {{$message}} @enderror</div>
+					<div class="m-b-23" style="color: darkred;">@error('new_password') {{$message}} @enderror</div>
 
-                    <div class="wrap-input100 validate-input" data-validate = "Email is required">
+                    <div class="wrap-input100 validate-input" data-validate = "Confirm password is required">
 						<span class="label-input100">Confirm Password</span>
-						<input class="input100" type="password" name="email" value="{{old('email')}}" placeholder="Enter your email">
+						<input class="input100" type="password" name="confirm_password" value="{{old('confirm_password')}}" placeholder="Enter your email">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
-					<div class="m-b-23" style="color: darkred;">@error('email') {{$message}} @enderror</div>
+					<div class="m-b-23" style="color: darkred;">@error('confirm_password') {{$message}} @enderror</div>
 
 					
 					<div class="text-right p-t-8 p-b-31">

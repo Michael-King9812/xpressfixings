@@ -160,7 +160,7 @@
                         <li><b>Location:</b> Osogbo, Osun State</li>
                         <!-- <li>Jr Union #999</li>-->
                         <li><b>Tell:</b> +234 905 577 251</li>
-                        <li><b>Email:</b> xpressfixing1@email.com, support@xpressfixing.com</li>
+                        <li><b>Email:</b> xpressfixing1@gmail.com, support@xpressfixing.com</li>
                     </ul>
                 </div>
             </div>
