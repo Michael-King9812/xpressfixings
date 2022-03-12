@@ -26,11 +26,6 @@
                         <input type="radio" name="category" value="customer" id="newbie" checked="checked" />
                         <label for="newbie">Customer</label>
 
-                        <!-- <input type="radio" name="category" value="engineer" id="average" />
-                        <label for="average">Engineer</label>
-
-                        <input type="radio" name="category" value="rider" id="master" />
-                        <label for="master">Rider</label> -->
                     </div>
 
                     <div class="form-textbox">

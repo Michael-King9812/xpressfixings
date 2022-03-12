@@ -103,8 +103,14 @@
                                             }
                                             
                                             elseif ($orderDetails->status == '4' && $orderDetails->approval == '2') {
-                                                echo "<p style='color: darkblue; font-weight: bold;'><span style='color: darkgreen'>You've been Approved.</span><br> Fixing device in progress...</p>";
-                                                
+                                                echo "<p style='color: darkblue; font-weight: bold;'><span style='color: darkgreen'>You've been Approved.</span><br>";
+                                                if($orderDetails->status == '4' && $orderDetails->approval == '2' && $orderDetails->assignedEngineer == '') {
+                                                    echo "Now you can assign engineer</p>";
+                                                } elseif($orderDetails->status == '4' && $orderDetails->approval == '2' && $orderDetails->assignedEngineer != '') {
+                                                    echo "You've already assigned an engineer</p>";
+                                                } else {
+
+                                                }
                                             }
                                             elseif ($orderDetails->status == '3') {
                                                 echo "<p style='color: red; font-weight: bold;'>Cancelled</p>";
@@ -143,7 +149,7 @@
                                         <th colspan="6">Action:</th>
                                         
                                         <td> 
-                                                @if($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus == '0')
+                                                @if($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus != '2')
                                                     <!-- <form id="form" action="{{route('approve.fixOrder', $orderDetails->remember_token)}}" method="post">
                                                         @csrf
                                                         @method('put')
@@ -297,34 +303,35 @@
                         
                         <!-- <div class="col-md-1"></div> -->
                         <div class="col-md-6">
-                            @if($orderDetails->status == '4' && $orderDetails->approval == '2')
+                            @if($orderDetails->status == '4' && $orderDetails->approval == '2' && $orderDetails->assignedEngineer == "")
                                 <h4 class="section-title" style="text-align: left; font-weight: bold; font-size: 25px;">Engineer Details</h4><br>
 
                                 <div class="form-group">
                                     <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Select Engineer</label>
                                     <div class="col-sm-12">
-                                        <select name="selectEngineer" id="selectEngineer" placeholder="Choose Engineer" value="{{old('selectEngineer')}}" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
-                                            <option id="engineerOptions" value="">Choose Engineer</option>      
-                                            @foreach($allEngineers as $listEngineers)
-                                                <option value="{{$listEngineers->remember_token}}">{{$listEngineers->fullname}}</option>
-                                            @endforeach
-                                        </select>
-                                        
-                                        @error('selectEngineer') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
-                                        
-                                        <table class="table" id="#table">
-                                            <br>
-                                            <tbody id="engineerDetails" class="tbody">
+                                        <form action='{{route("customer.assignEngineer", $orderDetails->remember_token)}}' method='post'>
+                                            <select name="selectEngineer" id="selectEngineer" placeholder="Choose Engineer" value="{{old('selectEngineer')}}" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                <option id="engineerOptions" value="">Choose Engineer</option>      
+                                                @foreach($allEngineers as $listEngineers)
+                                                    <option value="{{$listEngineers->remember_token}}">{{$listEngineers->fullname}}</option>
+                                                @endforeach
+                                            </select>
                                             
-                                            </tbody>
-                                        </table>
-                                        <div id="select" style="visibility: hidden; display: none;">
-                                            <form action='{{route("cancle.ride", $orderDetails->remember_token)}}' method='post'>
-                                                @csrf
-                                                @method('put')
-                                                <button class='btn btn-success' style='color: white; border-radius: 0;'><i class='fa fa-check'></i> Select Engineer </button>
-                                            </form>
-                                        </div>
+                                            @error('selectEngineer') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
+                                            
+                                            <table class="table" id="#table">
+                                                <br>
+                                                <tbody id="engineerDetails" class="tbody">
+                                                
+                                                </tbody>
+                                            </table>
+                                            <div id="select" style="visibility: hidden; display: none;">
+                                                
+                                                    @csrf
+                                                    @method('put')
+                                                    <button class='btn btn-success' style='color: white; border-radius: 0;'><i class='fa fa-check'></i> Select Engineer </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
 

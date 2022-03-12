@@ -122,6 +122,26 @@ class CustomerController extends Controller
         return view('customers.orderdetailss', compact(['data','allEngineers','orderDetails','assignedEngineer','allEngineers']));
     }
 
+    public function assignEngineer(Request $request, $token) {
+        $request->validate([
+            'selectEngineer'=>'required'
+        ]);
+
+        $assignEngineer = Orderdetail::where('remember_token', $token)->first(); 
+  
+        $assignEngineer->assignedEngineer = $request->selectEngineer; 
+
+        $assign = $assignEngineer->save();
+
+        if ($assign) {
+            return redirect()->back()->with('success','Engineer assigned successfully.');
+        } else {
+            return redirect()->back()->with('success','Engineer assigning failed.');
+        }
+        
+        
+    }
+
 
     public function getEngineerDetails(Request $request)
     {
@@ -220,7 +240,7 @@ class CustomerController extends Controller
     public function uploadProofOfPayment(Request $request, $token)
     {
         $request->validate([
-            'proof_upload_image'=>'required | image',
+            'proof_upload_image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
 
         $uploadImagePath = 'storage/'.$request->file('proof_upload_image')->store('Payment_Proof_Upload_Images', 'public');
@@ -232,7 +252,6 @@ class CustomerController extends Controller
         $order->approvalStatus = '1';
 
         $ordered = $order->save();
-        // dd("Your Validation is successful");
 
         if ($ordered) {
             return redirect()->back()->with('success', 'Proof Uploadded Successfully.');

@@ -93,6 +93,9 @@ Route::get('/views/engineer/{engineers}', [CustomerController::class, 'getEngine
 // To Customer Profile
 Route::get('/customer/profile', [CustomerController::class, 'profile'])->name('customer.profile');
 
+// To Customer assign Engineer
+Route::put('/customer/assign/{engineer}', [CustomerController::class, 'assignEngineer'])->name('customer.assignEngineer');
+
 // Store customer details
 Route::post("/customer/orderfix", [CustomerController::class, 'orderfixStore'])->name('customer.orderfixStore');
 

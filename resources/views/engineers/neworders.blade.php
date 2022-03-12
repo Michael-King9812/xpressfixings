@@ -54,9 +54,9 @@
                                 for($i = 0; $i < count($orderDetails); $i++) {
                                     $orderdetail = $orderDetails[$i];
                                     ?>
-                                    @if($orderdetail->status == '0' || $orderdetail->status == '1')
+                                    @if($orderdetail->approvalStatus == '2' && $orderdetail->approval == '2')
+                                    
                                         <tr>
-                                            <!-- <th scope="row"></th> -->
                                             <td>{{ $orderdetail->email }}</td>
                                             <td>{{ $orderdetail->created_at->diffForHumans() }}</td>
                                             <td>{{ $orderdetail->phone }}</td>

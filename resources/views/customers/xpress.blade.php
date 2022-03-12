@@ -231,7 +231,7 @@
                                             echo "<p style='color: indigo; font-weight: bold;'>Approval Needed</p>";
                                         }
                                         elseif ($orderdetail->status == '4') {
-                                            echo "<p style='color: purple; font-weight: bold;'>Fixing...</p>";
+                                            echo "<p style='color: purple; font-weight: bold;'>Approved</p>";
                                         }
                                         
                                         else  {

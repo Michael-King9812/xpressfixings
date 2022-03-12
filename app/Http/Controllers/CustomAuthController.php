@@ -48,8 +48,6 @@ class CustomAuthController extends Controller
             'password' => 'required|min:6|max:15'
         ]);
 
-
-        
         // $postUsersData = [
         //     'fullname' => $request->fullname,
         //     'email' => $request->email,
@@ -131,8 +129,8 @@ class CustomAuthController extends Controller
             if(Hash::check($request->password, $engineer->password)) {
                 
                 $request->session()->put('UserLoginId', $engineer->id);
-                
-                    return redirect('/engineer/dashboard');    
+                return redirect('/engineer/dashboard');    
+
             } else {
                 return back()->with('fail', 'Your Password did not match.');
             }
@@ -279,22 +277,7 @@ class CustomAuthController extends Controller
         
     }
 
-    public function logout()
-    {
-        if (Session::has('UserLoginId')) {
-            Session::pull('UserLoginId');
-
-            return redirect('/login');
-        }
-    }
-
-
-
-
-
-
-
-    
+      
 
     public function registration() {
         return view('auth.registration');
@@ -347,4 +330,15 @@ class CustomAuthController extends Controller
        }
 
     }
+
+
+    public function logout()
+    {
+        if (Session::has('UserLoginId')) {
+            Session::pull('UserLoginId');
+
+            return redirect('/login');
+        }
+    }
+
 }

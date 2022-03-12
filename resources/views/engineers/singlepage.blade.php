@@ -247,7 +247,7 @@
                                         <button class="btn btn-danger" style="font-weight: bold; color: white">Decline</button>
                                     </form>
                                 @endif
-                                @if($userOrderDetails->approvalStatus == '2')
+                                @if($userOrderDetails->approvalStatus == '2' && $userOrderDetails->status != '2')
                                     <h3 style="font-weight: bold;"> Actions</h3><br>
 
                                     <form action="{{route('fixingDone', $userOrderDetails->remember_token)}}" method="post">
@@ -259,9 +259,9 @@
                                         <h3 style="font-weight: bold;">Take Actions</h3><br>
                                         <button class="btn btn-success" style="font-weight: bold; color: white; backgroud-color: green;">Fixing Comleted</button>
 
-                                @elseif($userOrderDetails->status == '4' && $userOrderDetails->approval == '2')
+                                @elseif($userOrderDetails->approvalStatus == '2' && $userOrderDetails->approval == '2')
                                         <br>
-                                        <h2 style="color: darkgreen;">Fixing Completed</h2>
+                                        <h2 style="color: darkgreen;">Fixing Done</h2>
                                 @else
 
                                 @endif
