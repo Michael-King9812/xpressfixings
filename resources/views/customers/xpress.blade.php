@@ -78,7 +78,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12" style="font-weight: bold; font-size: 12px;">Device Model</label>
                                             <div class="col-md-12">
-                                                <input type="text" placeholder="Enter your current city"
+                                                <input type="text" placeholder="Enter device model name"
                                                     name="model" value="{{old('model')}}" class="form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     @error('Model') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
                                                 </div>
@@ -94,13 +94,13 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Select Device Fault</label>
+                                            <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Select Device Problem with fixing Price</label>
                                             <div class="col-sm-12">
-                                                <select name="problemcategory" value="{{old('problemcategory')}}" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                <select name="problemcategory" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     <option value="">Choose Problem Type</option>
                                                     <option value="others">Others</option>
                                                     @foreach($allProblems as $all)
-                                                        <option>{{$all->possibleProblems}}</option>
+                                                        <option value="{{$all->possibleProblems}}">{{$all->possibleProblems}} ( #{{$all->price}} )</option>
                                                     @endforeach
                                                     
                                                 </select>
@@ -141,7 +141,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- <div class="form-group">
+                                        <div class="form-group">
                                             <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Select Engineer</label>
                                             <div class="col-sm-12">
                                                 <select name="selectEngineer" id="selectEngineer" placeholder="Choose Engineer" value="{{old('selectEngineer')}}" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
@@ -158,17 +158,15 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div> -->
-
-
-                                        
+                                        </div>
 
 
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <button class="btn btn-success text-white">Order Repair</button>
                                             </div>
-                                        </div>
+                                        </div><br>
+                                        <span style="font-weight: bold; font-size: 15px; color: orange;"><i class="fa fa-exclamation-triangle"></i> Fixing will be Placed on 2 Month Warranty.</span><br><br>
                                     </form>
                                 </div>
                             
@@ -266,73 +264,73 @@
 
 
             
-            <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script type='text/javascript'>
 
-                // $(document).ready(function () {
+                $(document).ready(function () {
 
-                    // $('#currentState').change(function (){
-                    //     $.ajax({
-                    //         url: "/views/"+$('#currentState').val(),
-                    //         type: "GET",
-                    //         dataType: 'json',
-                    //         success: function(response) {
+                    $('#currentState').change(function (){
+                        $.ajax({
+                            url: "/views/"+$('#currentState').val(),
+                            type: "GET",
+                            dataType: 'json',
+                            success: function(response) {
                                 
-                    //             console.log(response);
+                                console.log(response);
 
-                    //             let engineerState = "";
-                    //             for(let i = 0; i < response.length; i++) {
-                    //                 engineerState += '<option id="option" value="'+response[i].remember_token+'">'+response[i].fullname+'</option>';
-                    //             }
+                                let engineerState = "";
+                                for(let i = 0; i < response.length; i++) {
+                                    engineerState += '<option id="option" value="'+response[i].remember_token+'">'+response[i].fullname+'</option>';
+                                }
                                
-                    //                 $('#selectEngineer') .find('#option') .remove() .end().append(engineerState);
+                                    $('#selectEngineer') .find('#option') .remove() .end().append(engineerState);
                                 
                                 
-                    //         }
-                    //     });
-                    // });
+                            }
+                        });
+                    });
 
 
-                    // $('#selectEngineer').change(function () {
+                    $('#selectEngineer').change(function () {
                         
-                    //     $.ajax({
-                    //         url: "/views/engineer/"+$('#selectEngineer').val(),
-                    //         type: 'GET',
-                    //         dataType: 'json',
-                    //         success: function (response) {
+                        $.ajax({
+                            url: "/views/engineer/"+$('#selectEngineer').val(),
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (response) {
                                 
-                    //             $('#engineerDetails') .find('tr') .remove() .end().append('\
-                    //                     <tr>\
-                    //                         <td>Name:</td>\
-                    //                         <td>'+response.fullname+'</td>\
-                    //                     </tr>\
-                    //                     <tr>\
-                    //                         <td>Phone Number:</td>\
-                    //                         <td>'+response.phoneNumber+'</td>\
-                    //                     </tr>\
-                    //                     <tr>\
-                    //                         <td>Email Address:</td>\
-                    //                         <td>'+response.email+'</td>\
-                    //                     </tr>\
-                    //                     <tr>\
-                    //                         <td>Address:</td>\
-                    //                         <td>'+response.address+'</td>\
-                    //                     </tr>\
-                    //                     <tr>\
-                    //                         <td>City:</td>\
-                    //                         <td>'+response.city+'</td>\
-                    //                     </tr>\
-                    //                     <tr>\
-                    //                         <td>State:</td>\
-                    //                         <td>'+response.state+'</td>\
-                    //                     </tr>\
-                    //                     ');
-                    //         }
-                    //     });
+                                $('#engineerDetails') .find('tr') .remove() .end().append('\
+                                        <tr>\
+                                            <td>Name:</td>\
+                                            <td>'+response.fullname+'</td>\
+                                        </tr>\
+                                        <tr>\
+                                            <td>Phone Number:</td>\
+                                            <td>'+response.phoneNumber+'</td>\
+                                        </tr>\
+                                        <tr>\
+                                            <td>Email Address:</td>\
+                                            <td>'+response.email+'</td>\
+                                        </tr>\
+                                        <tr>\
+                                            <td>Address:</td>\
+                                            <td>'+response.address+'</td>\
+                                        </tr>\
+                                        <tr>\
+                                            <td>City:</td>\
+                                            <td>'+response.city+'</td>\
+                                        </tr>\
+                                        <tr>\
+                                            <td>State:</td>\
+                                            <td>'+response.state+'</td>\
+                                        </tr>\
+                                        ');
+                            }
+                        });
                         
 
-                    // });
-                // });
+                    });
+                });
 
             </script>
 

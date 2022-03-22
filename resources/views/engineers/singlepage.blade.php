@@ -21,7 +21,7 @@
 @section('main')
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-6 col-xlg-3 col-md-5">
+    <div class="col-lg-8 col-xlg-8 col-md-8">
         <div class="card">
         <div class="card-body">
                 <center class="m-t-30"> <img src="{{asset('customers/assets/images/users/15.jpg')}}"
@@ -79,7 +79,7 @@
                                             echo "<p style='color: green;'>Fixing Done</p>";
                                         }
                                         elseif ($userOrderDetails->status == '4' && $userOrderDetails->approval == '1' && $userOrderDetails->approvalStatus == '1') {
-                                            echo "<p style='color: orange;'>Customer Approved. Waiting for your verification.</p>";
+                                            echo "<p style='color: orange;'>Customer has approved. Waiting for your verification.</p>";
                                         }
                                         elseif ( $userOrderDetails->status == '4' && $userOrderDetails->approval == '2' && $userOrderDetails->approvalStatus == '2') {
                                             echo "<p style='color: darkgreen;'>Payment Verified and Fixing in Progress...</p>";
@@ -179,74 +179,36 @@
                                                     <td><span style="color: green; font-weight: bold;">#{{$userOrderDetails->deviceFixPrice}}</span> </td>
                                                 </tr>
                                             </h6>
-                                            
-                                            
-
                                        @endif
+
+
+                                        @if($userOrderDetails->status == '0')
+                                                <form action="{{route('Approve', $userOrderDetails->remember_token)}}" method="post">
+                                                    @csrf
+                                                    @method('put')
+                                                    <button class="btn btn-success" style="font-weight: bold; color: white">Approve Order</button>
+                                                </form>
+                                            <form action="{{route('deleteOrder', $userOrderDetails->remember_token)}}" method="post">
+                                                @csrf
+                                                @method('put')
+                                                <button class="btn btn-danger" style="font-weight: bold; color: white">Decline</button>
+                                            </form>
+                                        @endif
                                                
             </div>
         </div>
     </div>
     <!-- Column -->
     <!-- Column -->
-    <div class="col-lg-6     col-xlg-9 col-md-7">
+    <div class="col-lg-4     col-xlg-4 col-md-4">
         <div class="card">
             <div class="card-body">
-                
-            <!-- <form action="{{route('engineer.deviceFixPrice', $userOrderDetails->remember_token)}}" method="post" class="form-horizontal form-material mx-2">            
-                            @csrf
-                            @method('put') 
-                
-                @if($userOrderDetails->status != '4' && $userOrderDetails->approval != '1' && $userOrderDetails->status != '2')
-                        <p style="color: green; font-size: 14px;">&nbsp; &nbsp;<i class="fas fa-check" aria-hidden="true"></i> Active</p>
-                    @if(Session::has('success'))
-                        <div id="msg" class="alert alert-success">{{ Session::get('success')}}</div>
-                    @endif
-                    @if(Session::has('fail'))
-                        <div id="msg" class="alert alert-danger">{{ Session::get('fail')}}</div>
-                    @endif
-
-
-
-                    <h3 style="font-weight: bold;">Assign Price</h3>
-                    <div class="form-group">
-                        
-                        <div class="col-sm-10 col-md-12">
-                            <label class="col-sm-12 col-md-10" style="font-weight: bold;">Enter Price Here:</label>
-                            <div class="col-sm-6 col-md-6">
-                                <input class="shadow-none form-control" name="fixingprice" value="{{$userOrderDetails->deviceFixPrice}}" value="{{old('fixingprice')}}" style="font-weight: bold;" value="" placeholder="#">
-                                
-                            </div>
-                            @error('fixingprice') <p style="color: red; font-size: 12px;">{{$message}}</p> @enderror
-                            <div class="col-sm-8 col-md-10" style="padding: 8px;">
-                            <button class="btn btn-success" style="font-weight: bold; color: white">Approve Order</button>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-                @endif
-            </form> -->
-                
-                <br><br>
 
                 <!-- <form class="form-horizontal form-material mx-2">             -->
                     <div class="form-group">
                         <div class="col-sm-10 col-md-12">
                             <div class="col-sm-5 col-md-12" style="padding: 8px;">
                             
-                                @if($userOrderDetails->status == '0')
-                                    <form action="{{route('Approve', $userOrderDetails->remember_token)}}" method="post">
-                                        @csrf
-                                        @method('put')
-                                        <!-- <button class="btn btn-success" style="font-weight: bold; color: white">Approve Order</button> -->
-                                    </form>
-                                    <form action="{{route('deleteOrder', $userOrderDetails->remember_token)}}" method="post">
-                                        @csrf
-                                        @method('put')
-                                        <button class="btn btn-danger" style="font-weight: bold; color: white">Decline</button>
-                                    </form>
-                                @endif
                                 @if($userOrderDetails->approvalStatus == '2' && $userOrderDetails->status != '2')
                                     <h3 style="font-weight: bold;"> Actions</h3><br>
 
@@ -276,3 +238,43 @@
     <!-- Column -->
 </div>
 @endsection
+
+
+
+
+
+
+<!-- <form action="" method="post" class="form-horizontal form-material mx-2">            
+                            @csrf
+                            
+                
+                <!-- @if($userOrderDetails->problemCategory !== "others" && $userOrderDetails->status == '0' && $userOrderDetails->approval != '1' && $userOrderDetails->status != '2')
+                        <p style="color: green; font-size: 14px;">&nbsp; &nbsp;<i class="fas fa-check" aria-hidden="true"></i> Active</p>
+                    @if(Session::has('success'))
+                        <div id="msg" class="alert alert-success">{{ Session::get('success')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div id="msg" class="alert alert-danger">{{ Session::get('fail')}}</div>
+                    @endif
+
+
+
+                    <h3 style="font-weight: bold;">Assign Price</h3>
+                    <div class="form-group">
+                        
+                        <div class="col-sm-10 col-md-12">
+                            <label class="col-sm-12 col-md-10" style="font-weight: bold;">Enter Price Here:</label>
+                            <div class="col-sm-6 col-md-6">
+                                <input class="shadow-none form-control" name="fixingprice" value="{{$userOrderDetails->deviceFixPrice}}" value="{{old('fixingprice')}}" style="font-weight: bold;" value="" placeholder="#">
+                                
+                            </div>
+                            @error('fixingprice') <p style="color: red; font-size: 12px;">{{$message}}</p> @enderror
+                            <div class="col-sm-8 col-md-10" style="padding: 8px;">
+                            <button class="btn btn-success" style="font-weight: bold; color: white">Approve Order</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                @endif -->
+            </form> 

@@ -103,7 +103,7 @@
                                             }
                                             
                                             elseif ($orderDetails->status == '4' && $orderDetails->approval == '2') {
-                                                echo "<p style='color: darkblue; font-weight: bold;'><span style='color: darkgreen'>You've been Approved.</span><br>";
+                                                echo "<p style='color: darkblue; font-weight: bold;'><span style='color: darkgreen'>You've been Approved, fixing in progress...</span><br>";
                                                 if($orderDetails->status == '4' && $orderDetails->approval == '2' && $orderDetails->assignedEngineer == '') {
                                                     echo "Now you can assign engineer</p>";
                                                 } elseif($orderDetails->status == '4' && $orderDetails->approval == '2' && $orderDetails->assignedEngineer != '') {
@@ -128,21 +128,21 @@
                                         <td> {{ $orderDetails->created_at->diffForHumans() }} </td>
                                     </tr>
                                     <?php    
-                                        if($orderDetails->status == '0') {
-                                            echo "";
-                                        }
-                                        elseif($orderDetails->status == '1' || $orderDetails->status == '4' || $orderDetails->status == '2') {
+                                        // if($orderDetails->status == '0') {
+                                        //     echo "";
+                                        // }
+                                        // elseif($orderDetails->status == '1' || $orderDetails->status == '4' || $orderDetails->status == '2') {
                                             echo '<tr>
                                                     <th colspan="6">Price</th>
                                                     <td><span style="color: purple; font-weight: bold;">#'.$orderDetails->deviceFixPrice.'</span> </td>
                                                 </tr>';
-                                        }
-                                        elseif ($orderDetails->status == '2') {
-                                            echo "";
-                                        } 
-                                        else  {
-                                            echo "";
-                                        }
+                                        // }
+                                        // elseif ($orderDetails->status == '2') {
+                                        //     echo "";
+                                        // } 
+                                        // else  {
+                                        //     echo "";
+                                        // }
                                     ?> 
                                         
                                     <tr>
@@ -172,9 +172,9 @@
                                                         </form>
                                                         <button class="btn btn-success"  data-toggle="modal" data-target="#paymentModal" style="color: white; cursor: pointer; border-radius: 0;">Make Payment <i class="fa fa-pay"></i></button>
                                                         <br><br> -->
-                                                        <form action="" method="post">
-                                                            <!-- @csrf
-                                                            @method('put') -->
+                                                        <form action="{{route('cancle.order', $orderDetails->remember_token)}}" method="post">
+                                                            @csrf
+                                                            @method('put')
 
                                                             <button class="btn btn-danger" style="color: white; cursor: pointer; border-radius: 0;">Cancle <i class="fa fa-trash"></i></button>
                                                         </form>
@@ -260,7 +260,10 @@
       <form action="{{route('customer.uploadProof', $orderDetails->remember_token)}}" method="post" enctype="multipart/form-data">
           @csrf
           @method('put')
-          <input type="file" name="proof_upload_image" id="" style="width: 180px; height: 60px; border-radius: 10px;"><br>
+            <img src="{{asset('default/10002.png')}}" alt="" id="profileDisplay" onclick="triggerClick()" style="max-width: 420px; min-width: 220px; width: auto; height: 220px; display: block; margin: 10px auto; cursor: pointer;">
+            <input type="file" name="proof_upload_image" onchange="displayImage(this)" id="profileImage" style="margin-bottom: 15px; display: none;"><br>
+
+          <!-- <input type="file" name="proof_upload_image" id="" style="width: 180px; height: 60px; border-radius: 10px;"> -->
           <button class="btn btn-success"  data-toggle="modal" data-target="#paymentModal" style="color: white; cursor: pointer; border-radius: 0;">Upload <i class="fa fa-pay"></i></button>
 
       </form>
@@ -290,7 +293,7 @@
                                         <img src="{{asset($orderDetails->approvalImage)}}" alt="Approval Image" style="width: 160px; height: 160px; border-radius: 5px;">
                                     </a><br><br>
                                     @if( $orderDetails->status == '4' && $orderDetails->approval == '2' && $orderDetails->approvalStatus == '2')
-                                        <img src="{{asset('storage\Payment_Proof_Upload_Images\paid\11597359386juvu4sdrej.png')}}" alt="Approval Image" style="width: 160px; height: 120px; border-radius: 5px;">
+                                        <img src="{{asset('storage\Payment_Proof_Upload_Images\paid\paid-g21daab019_640.png')}}" alt="Approval Image" style="width: 160px; height: 160px; border-radius: 5px;">
                                     @endif
                                 @endif
                                 <br>
@@ -604,57 +607,75 @@
             });
         </script>
 
+        <script>
+            function triggerClick() {
+                document.querySelector('#profileImage').click();
+            }
+
+            function displayImage(e) {
+                if (e.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        document.querySelector('#profileDisplay').setAttribute('src', e.target.result);
+                        
+                    }
+                    reader.readAsDataURL(e.files[0]);
+                }
+            }
+        </script>
+
 
         <script>
 
-    const paymentForm = document.getElementById('paymentForm');
-    paymentForm.addEventListener("submit", payWithPaystack, false);
+            const paymentForm = document.getElementById('paymentForm');
+            paymentForm.addEventListener("submit", payWithPaystack, false);
 
-    console.log($('email-address').val());
-    function payWithPaystack(e) {
-        e.preventDefault();
-        var deviceAmount = {{$orderDetails->deviceFixPrice}}
-        
-
-        let handler = PaystackPop.setup({
-        // key: 'pk_live_56bf056f32417eaab0bafb14fdcf45d4085a12f7', // Replace with your public key
-        key: 'pk_test_046a4a3973d277683a582a0124889681b5b9097d', // Replace with your public key
-        email: document.getElementById("email-address").value,
-        amount: deviceAmount * 100,
-        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-        // label: "Optional string that replaces customer email"
-        onClose: function(){
-        alert('Window closed.');
-        },
-        callback: function(response){
-        let reference = response.reference;
-        console.log(reference);
-        // verify Payment
-        $.ajax({
-            type: "GET",
-            url: "{{URL::to('customer/verify-payment')}}/{{$orderDetails->remember_token}}/"+reference,
-          
-            success: function(response) {
-                console.log(response);
+            console.log($('email-address').val());
+            function payWithPaystack(e) {
+                e.preventDefault();
+                var deviceAmount = {{$orderDetails->deviceFixPrice}}
                 
-                if(response[0].status == true) {
-                  $('form').prepend(`
-                      <h2>${response[0].message}</h2>
-                  `);
-                  
-                } else {
-                  $('').prepend(`
-                      <h2>Failed to Verify Payment</h2>
-                  `);
+
+                let handler = PaystackPop.setup({
+                // key: 'pk_live_56bf056f32417eaab0bafb14fdcf45d4085a12f7', // Replace with your public key
+                key: 'pk_test_046a4a3973d277683a582a0124889681b5b9097d', // Replace with your public key
+                email: document.getElementById("email-address").value,
+                amount: deviceAmount * 100,
+                ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                // label: "Optional string that replaces customer email"
+                onClose: function(){
+                alert('Window closed.');
+                },
+                callback: function(response){
+                let reference = response.reference;
+                console.log(reference);
+                // verify Payment
+                $.ajax({
+                    type: "GET",
+                    url: "{{URL::to('customer/verify-payment')}}/{{$orderDetails->remember_token}}/"+reference,
+                
+                    success: function(response) {
+                        console.log(response);
+                        
+                        if(response[0].status == true) {
+                        $('form').prepend(`
+                            <h2>${response[0].message}</h2>
+                        `);
+                        
+                        } else {
+                        $('').prepend(`
+                            <h2>Failed to Verify Payment</h2>
+                        `);
+                        }
+                    }
+                });
                 }
+            });
+            handler.openIframe();
             }
-        });
-        }
-    });
-    handler.openIframe();
-    }
-    
-</script>
+            
+        </script>
 
 
     @endsection

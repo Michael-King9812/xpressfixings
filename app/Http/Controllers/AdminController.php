@@ -190,7 +190,24 @@ public function approveEngineerUpdate(Request $request, $token) {
         $possibleProblems = PossibleProblems::all();
 
         return view('admins.addproblems', compact('data','possibleProblems'));
-    }   
+    } 
+
+
+    public function editProblem($problem, $token)
+    {
+        $data = array();
+        if (Session::has('UserLoginId')) {
+            $data = User::where('id','=', Session::get('UserLoginId'))->first();
+        }
+
+        $possibleProblems = PossibleProblems::all();
+        $problem = PossibleProblems::where('possibleProblems', $problem)
+                                    ->where('remember_token', $token)->first();
+        
+                                    
+        return view('admins.editProblem', compact('data', 'problem','possibleProblems'));
+    }
+    
     
     public function addEngineer() {
         $data = array();
@@ -306,13 +323,16 @@ public function approveEngineerUpdate(Request $request, $token) {
     public function storePossibleProblem(Request $request)
     {
         $request->validate([
-            'add_problem'=>'required'
+            'add_problem'=>'required',
+            'problem_price'=>'required'
         ]); 
 
         $possibleProblems = new PossibleProblems();
         $problem = $request->input('add_problem');
+        $problemPrice = $request->input('problem_price');
 
         $possibleProblems->possibleProblems = $problem;
+        $possibleProblems->price = $problemPrice;
         $possibleProblems->remember_token = Str::random(32);
 
         $addProblem = $possibleProblems->save();
@@ -321,6 +341,36 @@ public function approveEngineerUpdate(Request $request, $token) {
             return redirect()->back()->with('success', $request->input('add_problem').' added Successfully.');
         } else {
             return redirect()->back()->with('fail', 'Failed to Add Possible Problem.');
+        }
+    }
+    
+    public function updatePossibleProblem(Request $request, $problem, $token)
+    {
+        $request->validate([
+            'add_problem'=>'required',
+            'problem_price'=>'required'
+        ]); 
+
+        $data = array();
+        if (Session::has('UserLoginId')) {
+            $data = User::where('id','=', Session::get('UserLoginId'))->first();
+        }
+
+        $addProblem = \DB::table('possible_problems')
+        ->where('possibleProblems',$problem)
+        ->where('remember_token', $token)
+        ->update([
+             'possibleProblems'=> $request->add_problem,
+             'price' => $request->problem_price,
+        ]);
+
+        $possibleProblems = PossibleProblems::all();
+        
+
+        if ($addProblem) {
+            return view('admins.addproblems', compact('data', 'possibleProblems'))->with('success', $request->input('add_problem').' Updated Successfully.');
+        } else {
+            return redirect()->back()->with('fail', 'Failed to Update Possible Problem.');
         }
     }
 
@@ -334,7 +384,7 @@ public function approveEngineerUpdate(Request $request, $token) {
         $deleteProblem = $problemDelete->delete();
 
         if ($deleteProblem) {
-            return redirect()->back()->with('success', $problem.' Deleted Successfully.');
+            return redirect('admin.addProblems')->with('success', $problem.' Deleted Successfully.');
         } else {
             return redirect()->back()->with('fail', 'Problem in Deleting Data.');
         }

@@ -4,12 +4,12 @@
 <div class="page-breadcrumb">
     <div class="row align-items-center">
         <div class="col-12">
-            <h4 class="page-title">Add Possible Device Problems</h4>
+            <h4 class="page-title">Edit Possible Device Problems</h4>
             <div class="d-flex align-items-center">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Add Problems</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Problems</li>
                     </ol>
                 </nav>
             </div>
@@ -22,33 +22,35 @@
     <div class="row">
         <!-- Column -->
         <div class="col-lg-4 col-xlg-3 col-md-5">
+
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{route('admin.addProblemsStore')}}" method="post" class="form-horizontal form-material mx-2">
+                                <form action="{{route('admin.updateProblemsStore', [$problem->possibleProblems, $problem->remember_token])}}" method="post" class="form-horizontal form-material mx-2">
                                     @csrf
-                                    <div class="form-group">
-                                        <label class="col-md-12" style="font-weight: bold;">Add Problem:</label>
-                                        <div class="col-md-12" style="font-weight: bold;">
-                                            <input type="text" name="add_problem" value="{{old('add_problem')}}" placeholder="Add List of Possible Problems"
-                                             class="form-control form-control-line">
+                                    @method('put')
+                                        <div class="form-group">
+                                            <label class="col-md-12" style="font-weight: bold;">Edit Problem: </label>
+                                            <div class="col-md-12" style="font-weight: bold;">
+                                                <input type="text" name="add_problem" value="{{ $problem->possibleProblems }}" placeholder="Edit List of Possible Problems"
+                                                class="form-control form-control-line">
+                                            </div>
+                                            @error('add_problem') <div class="text-danger">{{$message}}</div> @enderror
                                         </div>
-                                        @error('add_problem') <div class="text-danger">{{$message}}</div> @enderror
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label class="col-md-12" style="font-weight: bold;">Add Problem Price:</label>
-                                        <div class="col-md-12" style="font-weight: bold;">
-                                            <input type="text" name="problem_price" value="{{old('problem_price')}}" placeholder="Add problem fixing price"
-                                             class="form-control form-control-line">
+                                        <div class="form-group">
+                                            <label class="col-md-12" style="font-weight: bold;">Edit Problem Price:</label>
+                                            <div class="col-md-12" style="font-weight: bold;">
+                                                <input type="text" name="problem_price" value="{{ $problem->price }}" placeholder="Edit problem fixing price"
+                                                class="form-control form-control-line">
+                                            </div>
+                                            @error('problem_price') <div class="text-danger">{{$message}}</div> @enderror
                                         </div>
-                                        @error('problem_price') <div class="text-danger">{{$message}}</div> @enderror
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <button class="btn btn-success text-white"> <i class="fas fa-plus"></i> Add Problem</button>
+                                        
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <button class="btn btn-success text-white"> <i class="fas fa-plus"></i> Edit Problem</button>
+                                            </div>
                                         </div>
-                                    </div>
                                 </form>
                             </div>
                         </div>

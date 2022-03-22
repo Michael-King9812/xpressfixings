@@ -34,7 +34,7 @@ return [
     */
 
     'mailers' => [
-        'smtp' => [
+        'smtp' => [ 
             'transport' => 'smtp',
             'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
             'driver' => env('MAIL_DRIVER', 'smtp'),

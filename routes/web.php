@@ -192,6 +192,7 @@ Route::get('/admin/profiles', [AdminController::class, 'profile'])->name('admin.
 
 // To Admin Add Possible Problems
 Route::get('/admin/posible_problems', [AdminController::class, 'addProblems'])->name('admin.addProblems');
+Route::get('/admin/edit_problem/{problem}/{remember_token}', [AdminController::class, 'editProblem'])->name('admin.editProblem');
 
 // To Admin Add Engineer
 Route::get('/admin/add_engineer', [AdminController::class, 'addEngineer'])->name('admin.addEngineer');
@@ -211,6 +212,7 @@ Route::delete('/admin/deletingEngineer/{engineerToken}/{engineersName}', [AdminC
 
 // To Admin Add Possible Problems Store
 Route::post('/admin/add_possible_problems', [AdminController::class, 'storePossibleProblem'])->name('admin.addProblemsStore');
+Route::put('/admin/update_possible_problems/{problem}/{token}', [AdminController::class, 'updatePossibleProblem'])->name('admin.updateProblemsStore');
 
 // To Admin Delete Possible Problems
 Route::delete('/admin/{add_possible_problems}/{item}', [AdminController::class, 'deleteProblem'])->name('admin.deleteProblem');

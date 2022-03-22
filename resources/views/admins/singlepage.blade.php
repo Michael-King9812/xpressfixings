@@ -79,7 +79,7 @@
                                             echo "<p style='color: green; font-size: 20px;'>Fixing Completed</p>";
                                         }
                                         elseif ($userOrderDetails->status == '4' && $userOrderDetails->approval == '1' && $userOrderDetails->approvalStatus == '1') {
-                                            echo "<p style='color: orange;'>Customer Approved. Waiting for your verification.</p>";
+                                            echo "<p style='color: orange;'>Customer has approved. Waiting for your verification.</p>";
                                         }
                                         elseif ( $userOrderDetails->status == '4' && $userOrderDetails->approval == '2' && $userOrderDetails->approvalStatus == '2') {
                                             echo "<p style='color: darkgreen;'>Payment Verified and Fixing in Progress...</p>";
@@ -163,22 +163,22 @@
                                         <small class="text-muted p-t-30 db">Assigned Engineer</small>
                                         <h6>
                                             <tr>
-                                                <td><span style="color: purple; font-weight: bold;">{{$userOrderDetails->assignedEngineer}}</span> </td>
+                                                <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->fullname }}</span> </td>
                                             </tr>
                                         </h6> <br>
                                         <small style="font-weight: bold; color: indigo;">Proof of Payment:</small><br>
                                         <a href="{{asset($userOrderDetails->approvalImage)}}" target="_top">
                                         <img src="{{asset($userOrderDetails->approvalImage)}}" alt="Approval Image" style="width: 160px; height: 160px; border-radius: 5px;">
                                         </a><br>
-                                        <div class="col-sm-8 col-md-10" style="padding: 8px;">
-                                            <form action="{{route('order.verify', $userOrderDetails->remember_token)}}" method="post">
-                                                @csrf
-                                                @method('put')
-                                                <button class="btn btn-success" style="font-weight: bold; color: white">Verify Order</button><br><br>
-                                            </form>
-                                            
-                                            <button class="btn btn-danger" style="font-weight: bold; color: white">Cancle</button>
-                                        </div>
+                                            <div class="col-sm-8 col-md-10" style="padding: 8px;">
+                                                <form action="{{route('order.verify', $userOrderDetails->remember_token)}}" method="post">
+                                                    @csrf
+                                                    @method('put')
+                                                    <button class="btn btn-success" style="font-weight: bold; color: white">Verify Order</button><br><br>
+                                                </form>
+                                                
+                                                <button class="btn btn-danger" style="font-weight: bold; color: white">Cancle</button>
+                                            </div>
 
                                         
                                         
@@ -206,13 +206,12 @@
         
         <div class="card">
             <div class="card-body">
-                @if($userOrderDetails->status == '0' && $userOrderDetails->assignedEngineer == "") 
+                @if($userOrderDetails->status == '0' && $userOrderDetails->status != '4' && $userOrderDetails->problemCategory == 'others' && $userOrderDetails->approval != '1' && $userOrderDetails->status != '2' ) 
 
                 <form action="{{route('engineer.deviceFixPrice', $userOrderDetails->remember_token)}}" method="post" class="form-horizontal form-material mx-2">            
                             @csrf
                             @method('put') 
                 
-                @if($userOrderDetails->status != '4' && $userOrderDetails->approval != '1' && $userOrderDetails->status != '2')
                         <p style="color: green; font-size: 14px;">&nbsp; &nbsp;<i class="fas fa-check" aria-hidden="true"></i> Active</p>
                     @if(Session::has('success'))
                         <div id="msg" class="alert alert-success">{{ Session::get('success')}}</div>
@@ -240,7 +239,6 @@
                         
                     </div>
                     
-                @endif
             </form>
 
                 @endif

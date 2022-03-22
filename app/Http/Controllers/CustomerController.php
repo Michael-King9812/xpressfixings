@@ -29,19 +29,21 @@ class CustomerController extends Controller
         $this->middleware('UserLoginId');
     }
 
-    public function indexs($state = "osun") {
+    public function indexs() {
         $data = array();
         $orderDetails = orderdetail::all()->where('user_id','=', Session::get('UserLoginId'));
         $allProblems = PossibleProblems::all();
         $allStates = State::all();
-        $allEngineers = Engineer::where('state',$state)->get();
+
+        
+        // $assignedEngineer = Engineer::where('remember_token', $orderDetails->assignedEngineer)->first();
 
         if (Session::has('UserLoginId')) {
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
         }
         
-        return view('customers.xpress', compact(['data','orderDetails', 'allEngineers', 'allProblems','allStates']));
-    }
+        return view('customers.xpress', compact(['data','orderDetails','allProblems','allStates']));
+    } 
 
 
     public function profile() {
@@ -119,7 +121,7 @@ class CustomerController extends Controller
         $allEngineers = Engineer::where('state',$state)->get();
         $assignedEngineer = Engineer::where('remember_token', $orderDetails->assignedEngineer)->first();
 
-        return view('customers.orderdetailss', compact(['data','allEngineers','orderDetails','assignedEngineer','allEngineers']));
+        return view('customers.orderdetailss', compact(['data','orderDetails','assignedEngineer','allEngineers']));
     }
 
     public function assignEngineer(Request $request, $token) {
@@ -186,6 +188,7 @@ class CustomerController extends Controller
             'problemcategory' => 'required',
             'currentstate' => 'required',
             'currentcity' => 'required',
+            'selectEngineer' => 'required',
         ]);
 
         $data = array();
@@ -193,7 +196,8 @@ class CustomerController extends Controller
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
         }
 
-        $orderId = Orderdetail::latest()->take(1)->first();
+
+        $problemPrice = PossibleProblems::where('possibleProblems', $request->input('problemcategory'))->first();
         $fullName = $data->fullname;
         $email = $data->email;
 
@@ -207,8 +211,13 @@ class CustomerController extends Controller
         $problemCategory = $request->input('problemcategory');
         $imieNo = $request->input('imieno');
         $complain = $request->input('complain');
+        if($problemCategory != 'others') {
+            $deviceFixPrice = $problemPrice->price;
+        }
         $currentState = $request->input('currentstate');
         $currentCity = $request->input('currentcity');
+        $selectEngineer = $request->input('selectEngineer');
+
 
 
         $order = new Orderdetail();
@@ -224,6 +233,10 @@ class CustomerController extends Controller
         $order->problemCategory = $problemCategory;
         $order->currentCity = $currentCity;
         $order->currentState = $currentState;
+        $order->assignedEngineer = $selectEngineer;
+        if($problemCategory != 'others') {
+            $order->deviceFixPrice = $deviceFixPrice;
+        }
         $order->remember_token = Str::random(32);
 
         $ordered = $order->save();
@@ -239,6 +252,7 @@ class CustomerController extends Controller
 
     public function uploadProofOfPayment(Request $request, $token)
     {
+
         $request->validate([
             'proof_upload_image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);

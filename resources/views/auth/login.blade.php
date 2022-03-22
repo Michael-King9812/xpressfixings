@@ -89,12 +89,12 @@
 						<span>
 							<a href="{{route('auth.engineer')}}" style="font-weight: bold;">Login as Engineer</a>
 						</span><br><br>
-						<span>
+						<!-- <span>
 							Or Sign Up Using
-						</span>
+						</span> -->
 					</div>
 
-					<div class="flex-c-m">
+					<!-- <div class="flex-c-m">
 						<a href="#" class="login100-social-item bg1">
 							<i class="fa fa-facebook"></i>
 						</a>
@@ -106,7 +106,7 @@
 						<a href="#" class="login100-social-item bg3">
 							<i class="fa fa-google"></i>
 						</a>
-					</div>
+					</div> -->
 
 				
 				</form><br><br><br>

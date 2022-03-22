@@ -24,7 +24,7 @@
     <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
         <div class="card-body">
-                <center class="m-t-30"> <img src="{{asset('customers/assets/images/users/5.jpg')}}"
+                <!-- <center class="m-t-30"> <img src="{{asset('customers/assets/images/users/5.jpg')}}"
                         class="rounded-circle" width="150" />
                     <h4 class="card-title m-t-10">Full Name: Hanna Gover</h4>
                     <!-- <h6 class="card-subtitle">Accoubts Manager Amix corp</h6> -->
@@ -37,7 +37,7 @@
                                     class="icon-picture"></i>
                                 <font class="font-medium">54</font>
                             </a></div>
-                    </div> -->
+                    </div> --
                 </center>
             </div>
             <div>
@@ -47,13 +47,13 @@
                 <h6>hannagover@gmail.com</h6> <small class="text-muted p-t-30 db">Phone</small>
                 <h6>+91 654 784 547</h6> <small class="text-muted p-t-30 db">Address</small>
                 
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- Column -->
     <!-- Column -->
     <div class="col-lg-8 col-xlg-9 col-md-7">
-        <div class="card">
+        <!-- <div class="card">
             <div class="card-body">
                 <form class="form-horizontal form-material mx-2">
                     <div class="form-group">
@@ -92,7 +92,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div> -->
     </div>
     <!-- Column -->
 </div>

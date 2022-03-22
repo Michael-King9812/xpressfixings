@@ -149,7 +149,8 @@ class EngineerController extends Controller
 
         $order = Orderdetail::where('remember_token', $token)->first();
 
-        $order->status = "4";   
+        $order->status = "4";
+        $order->approval = "1";   
         $ordered = $order->save();
 
         if ($ordered) {

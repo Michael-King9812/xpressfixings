@@ -50,34 +50,32 @@
                         </thead>
                         <tbody>
                         <?php
-                            if($orderDetails) {
-                                for($i = 0; $i < count($orderDetails); $i++) {
-                                    $orderdetail = $orderDetails[$i];
-                                    ?>
-                                    @if($orderdetail->approvalStatus == '2' && $orderdetail->approval == '2')
+                            for($i = 0; $i < count($orderDetails); $i++) {
+                                $orderdetail = $orderDetails[$i];
+                                ?>
+                                    @if($orderdetail->status == '0' || $orderdetail->status == '1')
+                                <tr>
+                                    <!-- <th scope="row"></th> -->
+                                    <td>{{ $orderdetail->email }}</td>
+                                    <td>{{ $orderdetail->created_at->diffForHumans() }}</td>
+                                    <td>{{ $orderdetail->phone }}</td>
+                                    <td>{{ $orderdetail->problemCategory }}</td>
+                                    <td>{{ $orderdetail->deviceType }}</td>
+                                    <!-- <td><span class="label label-rounded label-primary">Pending</span></td> -->
                                     
-                                        <tr>
-                                            <td>{{ $orderdetail->email }}</td>
-                                            <td>{{ $orderdetail->created_at->diffForHumans() }}</td>
-                                            <td>{{ $orderdetail->phone }}</td>
-                                            <td>{{ $orderdetail->deviceType }}</td>
-                                            
-                                            <td><span class="label text-warning" style="font-weight: bold;">Pending...</span></td>
-                                                
-                                            <td>{{ $orderdetail->currentState }}</td>
-                                            <td>{{ $orderdetail->currentCity }}</td>
-                                            <td>
-                                                <a href="{{route('engineer.viewSingle', $orderdetail->remember_token)}}"><button class="btn btn-default" style="color: white; border-radius: 50%;"><i class="fa fa-eye"></i></button></a>
-                                            </td>
-                                                
-                                        </tr>
-                                    @endif
-                                    <?php
-                                    echo '<option value="'.$orderdetail->id.'">'.$orderdetail->fullname.'</option>';
-                                    
-                                }
-                            } else {
-                                echo "No Order Yet";
+                                    <td><span class="label text-warning">Pending...</span></td>
+                                        
+                                    <td>{{ $orderdetail->currentState }}</td>
+                                    <td>{{ $orderdetail->currentCity }}</td>
+                                    <td>
+                                        <a href="{{route('engineer.viewSingle', $orderdetail->remember_token)}}"><button class="btn btn-default" style="color: white; border-radius: 50%;"><i class="fa fa-eye"></i></button></a>
+                                    </td>
+                                        
+                                </tr>
+                            @endif
+                                <?php
+                                echo '<option value="'.$orderdetail->id.'">'.$orderdetail->fullname.'</option>';
+                                
                             }
                             
                         ?>

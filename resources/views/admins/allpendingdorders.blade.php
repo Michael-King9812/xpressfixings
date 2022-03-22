@@ -41,6 +41,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Time</th>
                                 <th scope="col">Phone Number</th>
+                                <th scope="col">Problem</th>
                                 <th scope="col">Device Type</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Current State</th>
@@ -59,6 +60,7 @@
                                     <td>{{ $orderdetail->email }}</td>
                                     <td>{{ $orderdetail->created_at->diffForHumans() }}</td>
                                     <td>{{ $orderdetail->phone }}</td>
+                                    <td>{{ $orderdetail->problemCategory }}</td>
                                     <td>{{ $orderdetail->deviceType }}</td>
                                     <!-- <td><span class="label label-rounded label-primary">Pending</span></td> -->
                                     

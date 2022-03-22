@@ -12,12 +12,12 @@
         <link rel="icon" type="image/png" sizes="16x16" href="{{asset('customers/assets/images/favicon.png')}}">
 
         <!--========== CSS ==========-->
-        <!-- <link rel="stylesheet" href="{{asset('customers/assets/css/bootstrap.min.css')}}"> -->
+        <link rel="stylesheet" href="{{asset('customers/assets/css/bootstrap.min.css')}}">
         
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css">
         <link rel="stylesheet" href="{{asset('customers/assets/css/styles.css')}}">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="{{asset('css\bootstrap.css')}}">      -->
         <link rel="stylesheet" href="{{asset('customers/assets/js/jquery.min.js')}}">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -129,9 +129,9 @@
 
                     <span class="footer__description">Technologies</span>
                     <div>
-                        <a href="#" class="footer__social"><i class='bx bxl-facebook'></i></a>
-                        <a href="#" class="footer__social"><i class='bx bxl-instagram'></i></a>
-                        <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+                        <a href="https://www.facebook.com/xpressfixing" class="footer__social"><i class='bx bxl-facebook'></i></a>
+                        <a href="https://www.instagram.com/invites/contact/?i=skboj004vj1k&utm_content=3aejI96" class="footer__social"><i class='bx bxl-instagram'></i></a>
+                        <a href="https://www.twitter.com/xpressixing?s=09" class="footer__social"><i class='bx bxl-twitter'></i></a>
                     </div>
                 </div>
 
@@ -179,6 +179,9 @@
         }
     </script>
 
+
+        
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"> -->
         <!--========== SCROLL REVEAL ==========-->
         <script src="https://unpkg.com/scrollreveal"></script>
 
