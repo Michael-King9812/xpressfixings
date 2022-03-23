@@ -24,7 +24,7 @@
     <div class="col-lg-6 col-xlg-3 col-md-5">
         <div class="card">
         <div class="card-body">
-                <center class="m-t-30"> <img src="{{asset('customers/assets/images/users/15.jpg')}}"
+                <center class="m-t-30"> <img src="{{asset('default/PngItem_350426.png')}}"
                         class="rounded-circle" width="150" />
                     <!-- <h4 class="card-title m-t-10">Full Name: Hanna Gover</h4> -->
                     <!-- <h6 class="card-subtitle">Accoubts Manager Amix corp</h6> -->
@@ -122,7 +122,7 @@
                                                         <img src="{{asset('storage\Payment_Proof_Upload_Images\paid\-115973587912mujrzbezw.png')}}" alt="Approval Image" style="width: 160px; height: 160px; border-radius: 5px;">
                                                     @endif
                                                 @endif
-                                        @elseif(($userOrderDetails->status == '4') && ($userOrderDetails->status == '4' && $userOrderDetails->approval == '1' && $userOrderDetails->approvalStatus == '2') || ($userOrderDetails->status == '4' && $userOrderDetails->approval == '2' && $userOrderDetails->approvalStatus == '2'))
+                                        @elseif(($userOrderDetails->status == '4') && $userOrderDetails->approval == '1' && $userOrderDetails->approvalStatus == '2') || ($userOrderDetails->status == '4' && $userOrderDetails->approval == '2' && $userOrderDetails->approvalStatus == '2'))
                                         <small class="text-muted p-t-30 db">Fixing Price</small>
                                         <h6>
                                             <tr>
@@ -159,13 +159,16 @@
                                                 <td><span style="color: green; font-weight: bold;">#{{$userOrderDetails->deviceFixPrice}}</span> </td>
                                             </tr>
                                         </h6>
-                                        
-                                        <small class="text-muted p-t-30 db">Assigned Engineer</small>
-                                        <h6>
-                                            <tr>
-                                                <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->fullname }}</span> </td>
-                                            </tr>
-                                        </h6> <br>
+                                    
+                                        @if($assignedEngineer)
+                                            <small class="text-muted p-t-30 db">Assigned Engineer</small>
+                                            <h6>
+                                                <tr>
+                                                    <td><span style="color: purple; font-weight: bold;">{{$assignedEngineer->fullname }}</span> </td>
+                                                </tr>
+                                            </h6> 
+                                        @endif
+                                        <br>
                                         <small style="font-weight: bold; color: indigo;">Proof of Payment:</small><br>
                                         <a href="{{asset($userOrderDetails->approvalImage)}}" target="_top">
                                         <img src="{{asset($userOrderDetails->approvalImage)}}" alt="Approval Image" style="width: 160px; height: 160px; border-radius: 5px;">
@@ -206,7 +209,7 @@
         
         <div class="card">
             <div class="card-body">
-                @if($userOrderDetails->status == '0' && $userOrderDetails->status != '4' && $userOrderDetails->problemCategory == 'others' && $userOrderDetails->approval != '1' && $userOrderDetails->status != '2' ) 
+                @if($userOrderDetails->status == '4' && $userOrderDetails->problemCategory == 'others' && $userOrderDetails->approval == '1' && $userOrderDetails->approvalImage != '' && $userOrderDetails->status != '2' ) 
 
                 <form action="{{route('engineer.deviceFixPrice', $userOrderDetails->remember_token)}}" method="post" class="form-horizontal form-material mx-2">            
                             @csrf

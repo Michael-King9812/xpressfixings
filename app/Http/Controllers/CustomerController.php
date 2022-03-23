@@ -188,7 +188,7 @@ class CustomerController extends Controller
             'problemcategory' => 'required',
             'currentstate' => 'required',
             'currentcity' => 'required',
-            'selectEngineer' => 'required',
+            // 'selectEngineer' => 'required',
         ]);
 
         $data = array();
@@ -216,7 +216,7 @@ class CustomerController extends Controller
         }
         $currentState = $request->input('currentstate');
         $currentCity = $request->input('currentcity');
-        $selectEngineer = $request->input('selectEngineer');
+        // $selectEngineer = $request->input('selectEngineer');
 
 
 
@@ -229,11 +229,12 @@ class CustomerController extends Controller
         $order->model = $model;
         $order->imieNo = $imieNo;
         $order->complain = $complain;
-        $order->status = "0";
+        $order->status = "4";
+        $order->approval = "1";
         $order->problemCategory = $problemCategory;
         $order->currentCity = $currentCity;
         $order->currentState = $currentState;
-        $order->assignedEngineer = $selectEngineer;
+        // $order->assignedEngineer = $selectEngineer;
         if($problemCategory != 'others') {
             $order->deviceFixPrice = $deviceFixPrice;
         }
@@ -254,7 +255,7 @@ class CustomerController extends Controller
     {
 
         $request->validate([
-            'proof_upload_image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'proof_upload_image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:100000',
         ]);
 
         $uploadImagePath = 'storage/'.$request->file('proof_upload_image')->store('Payment_Proof_Upload_Images', 'public');

@@ -141,7 +141,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Select Engineer</label>
                                             <div class="col-sm-12">
                                                 <select name="selectEngineer" id="selectEngineer" placeholder="Choose Engineer" value="{{old('selectEngineer')}}" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
@@ -158,7 +158,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
+                                        </div> -->
 
 
                                         <div class="form-group">
@@ -226,7 +226,7 @@
                                             echo "<p style='color: orange; font-weight: bold;'>Waiting...</p>'";
                                         }
                                         elseif ($orderdetail->status == '4' && $orderdetail->approval == '1') {
-                                            echo "<p style='color: indigo; font-weight: bold;'>Approval Needed</p>";
+                                            echo "<p style='color: tomato; font-weight: bold;'>Payment needed</p>";
                                         }
                                         elseif ($orderdetail->status == '4') {
                                             echo "<p style='color: purple; font-weight: bold;'>Approved</p>";
@@ -270,14 +270,15 @@
                 $(document).ready(function () {
 
                     $('#currentState').change(function (){
+                        console.log($('#currentState').val());
                         $.ajax({
+                            
                             url: "/views/"+$('#currentState').val(),
                             type: "GET",
                             dataType: 'json',
                             success: function(response) {
                                 
                                 console.log(response);
-
                                 let engineerState = "";
                                 for(let i = 0; i < response.length; i++) {
                                     engineerState += '<option id="option" value="'+response[i].remember_token+'">'+response[i].fullname+'</option>';

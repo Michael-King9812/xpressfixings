@@ -81,7 +81,7 @@
                                             echo "<td scope='col'><span style='font-weight: bold; color: lightgreen; font-weight: bold;' class='label'>Verification Needed</span></td>";
                                         }
                                         elseif ($orderdetail->status == '4' && $orderdetail->approval == '1') {
-                                            echo "<td><span style='font-weight: bold; color: purple; font-weight: bold;' class='label'>Waiting</span></td>";
+                                            echo "<td><span style='font-weight: bold; color: tomato; font-weight: bold;' class='label'>Waiting</span></td>";
                                         }
                                         elseif ($orderdetail->status == '4' && $orderdetail->approval == '2') {
                                             echo "<td scope='col'><span style='font-weight: bold; color: black; font-weight: bold;' class='label'>Approved</span></td>";

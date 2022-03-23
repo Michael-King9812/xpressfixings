@@ -132,7 +132,7 @@
                         <li>
                             <!-- User Profile-->
                             <div class="user-profile d-flex no-block dropdown m-t-20">
-                                <div class="user-pic"><img src="{{asset('customers/assets/images/users/1.jpg')}}" alt="users"
+                                <div class="user-pic"><img src="{{asset('default/PngItem_350426.png')}}" alt="users"
                                         class="rounded-circle" width="40" /></div>
                                 <div class="user-content hide-menu m-l-10">
                                     <a href="#" class="" id="Userdd" role="button"

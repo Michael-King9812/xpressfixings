@@ -128,7 +128,7 @@
                                         <td> {{ $orderDetails->created_at->diffForHumans() }} </td>
                                     </tr>
                                     <?php    
-                                        // if($orderDetails->status == '0') {
+                                        if($orderDetails->deviceFixPrice != '') {
                                         //     echo "";
                                         // }
                                         // elseif($orderDetails->status == '1' || $orderDetails->status == '4' || $orderDetails->status == '2') {
@@ -142,28 +142,32 @@
                                         // } 
                                         // else  {
                                         //     echo "";
-                                        // }
+                                        }
                                     ?> 
                                         
                                     <tr>
                                         <th colspan="6">Action:</th>
                                         
                                         <td> 
-                                                @if($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus != '2')
+                                                @if($orderDetails->problemCategory == 'others' && $orderDetails->deviceFixPrice == '')
+                                                    <p style='color: darkblue; font-weight: bold;'><span style='color: tomato'>Request Recieved, wait for Admin to assign price</span><br>
+
+                                                @elseif($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus != '2')
                                                     <!-- <form id="form" action="{{route('approve.fixOrder', $orderDetails->remember_token)}}" method="post">
                                                         @csrf
                                                         @method('put')
                                                         <button style="" class="btn btn-success" style="color: white; cursor: pointer; border-radius: 0;">Approved <i class="fa fa-check"></i></button>
                                                     </form> -->
-                                                    <span style="font-weight: bold; font-size: 15px; color: orange;"><i class="fa fa-exclamation-triangle"></i> Fixing will be Placed on 2 Month Warranty.</span><br><br>
-                                                    <button class="btn btn-success"  data-toggle="modal" data-target="#paymentModal" style="color: white; cursor: pointer; border-radius: 0;"><i class="fa fa-credit-card"></i> Make Payment</button>
-                                                    <br><br>
-                                                    <form action="{{route('cancle.order', $orderDetails->remember_token)}}" method="post">
-                                                        @csrf
-                                                        @method('put')
+                                                   
+                                                        <span style="font-weight: bold; font-size: 15px; color: orange;"><i class="fa fa-exclamation-triangle"></i> Fixing will be Placed on 2 Month Warranty.</span><br><br>
+                                                        <button class="btn btn-success"  data-toggle="modal" data-target="#paymentModal" style="color: white; cursor: pointer; border-radius: 0;"><i class="fa fa-credit-card"></i> Make Payment</button>
+                                                        <br><br>
+                                                        <form action="{{route('cancle.order', $orderDetails->remember_token)}}" method="post">
+                                                            @csrf
+                                                            @method('put')
 
-                                                        <button class="btn btn-danger" style="color: white; cursor: pointer; border-radius: 0;">Cancle <i class="fa fa-trash"></i></button>
-                                                    </form>
+                                                            <button class="btn btn-danger" style="color: white; cursor: pointer; border-radius: 0;">Cancle <i class="fa fa-trash"></i></button>
+                                                        </form>
                                                 @elseif($orderDetails->status == '0')
                                                         <!-- <form id="form" action="{{route('approve.fixOrder', $orderDetails->remember_token)}}" method="post">
                                                             @csrf
@@ -349,20 +353,20 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input type="text" placeholder="Enter Your Name for Identification."
-                                                    class="form-control form-control-line" name="idName"  style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                    class="form-control form-control-line" name="idName" disabled  style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <div class="col-md-12">
-                                                <textarea rows="3" name="current-location" placeholder="Enter your current location..." class="form-control form-control-line"  style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></textarea>
+                                                <textarea rows="3" name="current-location" disabled placeholder="Enter your current location..." class="form-control form-control-line"  style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></textarea>
                                             </div>
                                         </div>
                                 
                                         <div class="form-group">
                                             <!-- <label class="col-md-12" style="font-weight: bold">Phone Number:</label> -->
                                             <div class="col-md-12">
-                                                <input type="text" name="phone-number" placeholder="Enter Phone Number"
+                                                <input type="text" name="phone-number" disabled placeholder="Enter Phone Number"
                                                     class="form-control form-control-line"  style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                             </div>
                                         </div>
@@ -370,7 +374,7 @@
                                         <div class="form-group">
                                             <!-- <label class="col-sm-12" style="font-weight: bold">Current State</label> -->
                                             <div class="col-sm-12">
-                                                <select name="current-state" class="form-select shadow-none form-control form-control-line"  style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                <select name="current-state" disabled class="form-select shadow-none form-control form-control-line"  style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     <option value="">Please Select Current State</option>    
                                                     @foreach($allEngineers as $listStates)
                                                         <option value="{{$listStates->stateName}}">{{$listStates->stateName}}</option>
@@ -382,7 +386,7 @@
                                 <div class="form-group">
                                     <!-- <label class="col-md-12" style="font-weight: bold">City</label> -->
                                     <div class="col-md-12">
-                                        <input type="text" name="current-city" placeholder="Enter your current city"
+                                        <input type="text" name="current-city" disabled placeholder="Enter your current city"
                                             class="form-control form-control-line"  style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                     </div>
                                 </div>

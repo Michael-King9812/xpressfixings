@@ -20,6 +20,10 @@
             body {
                 font-size: 14px;
             }
+
+            button {
+                cursor: pointer;
+            }
         </style>
         
     </head>

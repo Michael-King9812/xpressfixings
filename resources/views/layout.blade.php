@@ -130,8 +130,8 @@
                     <span class="footer__description">Technologies</span>
                     <div>
                         <a href="https://www.facebook.com/xpressfixing" class="footer__social"><i class='bx bxl-facebook'></i></a>
-                        <a href="https://www.instagram.com/invites/contact/?i=skboj004vj1k&utm_content=3aejI96" class="footer__social"><i class='bx bxl-instagram'></i></a>
-                        <a href="https://www.twitter.com/xpressixing?s=09" class="footer__social"><i class='bx bxl-twitter'></i></a>
+                        <a href="https://www.instagram.com/xpressfixing" class="footer__social"><i class='bx bxl-instagram'></i></a>
+                        <a href="https://www.twitter.com/xpressfixing" class="footer__social"><i class='bx bxl-twitter'></i></a>
                     </div>
                 </div>
 
