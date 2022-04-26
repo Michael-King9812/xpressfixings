@@ -1,63 +1,75 @@
-@extends('admins/layout')
+@extends('admins/layouts/layout')
 
-@section('breadcrumb')
-<div class="page-breadcrumb">
-    <div class="row align-items-center">
-        <div class="col-12">
-            <h4 class="page-title">Manage All Customers</h4>
-            <div class="d-flex align-items-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">List of All Customers</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
+@section('sidebar')
+    @include('admins.layouts.sidebar')
+@endsection
+
+@section('navbar')
+    @include('admins.layouts.navbar')
 @endsection
 
 @section('main')
-    <div class="row">
-                   
-        <!-- Column -->
-        <div class="col-lg-12 col-xlg-12 col-md-12">
-            <div class="card">
-                
-                <div class="card-body"> 
-                    <h4 style="font-weight: bold;">Customers List (500)</h4>
-                <div class="table table-responsive table-striped table-hover">
-                    <table class="table">
-                    <thead>
+
+<div class="container-fluid">
+    <div class="header">
+        <h1 class="header-title">
+            Manage Engineers
+        </h1>
+        <!-- <p class="header-subtitle">Your sales increased by 4.25% and revenue increased by 5.12%.</p> -->
+    </div>
+
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header">
+                    <div class="card-actions float-right">
+                        <a href="#" class="mr-1">
+                            <i class="align-middle" data-feather="refresh-cw"></i>
+                        </a>
+                        <div class="d-inline-block dropdown show">
+                            <a href="#" data-toggle="dropdown" data-display="static">
+                                <i class="align-middle" data-feather="more-vertical"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="card-title mb-0">Total Customers (<span style="color: red;">{{App\Models\User::where('category','customer')->count()}})</span></h5>
+                </div>
+                    @if(Session::has('success'))
+                        <div id="msg" style="padding: 8px; text-align: center;" class="alert alert-success">{{ Session::get('success')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div id="msg" style="padding: 8px; text-align: center;" class="alert alert-danger">{{ Session::get('fail')}}</div>
+                    @endif
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="datatables-basic" class="table table-striped" style="width:100%">
+                        <thead>
                             <tr>
-                                <!-- <th scope="col">#</th> -->
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Email</th>
-                                <!-- <th scope="col">Phone Number</th> -->
+                                <th>Names</th>
+                                <th>Email</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                    <!-- <th scope="row"></th> -->
-                                    <td>{{ $user->fullname }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <!-- <td>{{ $user->phone }}</td> -->
-                                    
+                                    <td class="align-middle">{{ $user->fullname }}</td>
+                                    <td class="align-middle">{{ $user->email }}</td>
                                 </tr>
                             @endforeach
-
-                            
-                            
-                            
                         </tbody>
                     </table>
                 </div>
-
-                </div>
+                
             </div>
         </div>
-        <!-- Column -->
     </div>
+
 @endsection

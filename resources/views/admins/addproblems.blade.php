@@ -1,110 +1,123 @@
-@extends('admins/layout')
+@extends('admins/layouts/layout')
 
-@section('breadcrumb')
-<div class="page-breadcrumb">
-    <div class="row align-items-center">
-        <div class="col-12">
-            <h4 class="page-title">Add Possible Device Problems</h4>
-            <div class="d-flex align-items-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Add Problems</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
+@section('sidebar')
+    @include('admins.layouts.sidebar')
+@endsection
+
+@section('navbar')
+    @include('admins.layouts.navbar')
 @endsection
 
 @section('main')
-    <div class="row">
-        <!-- Column -->
-        <div class="col-lg-4 col-xlg-3 col-md-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <form action="{{route('admin.addProblemsStore')}}" method="post" class="form-horizontal form-material mx-2">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label class="col-md-12" style="font-weight: bold;">Add Problem:</label>
-                                        <div class="col-md-12" style="font-weight: bold;">
-                                            <input type="text" name="add_problem" value="{{old('add_problem')}}" placeholder="Add List of Possible Problems"
-                                             class="form-control form-control-line">
-                                        </div>
-                                        @error('add_problem') <div class="text-danger">{{$message}}</div> @enderror
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label class="col-md-12" style="font-weight: bold;">Add Problem Price:</label>
-                                        <div class="col-md-12" style="font-weight: bold;">
-                                            <input type="text" name="problem_price" value="{{old('problem_price')}}" placeholder="Add problem fixing price"
-                                             class="form-control form-control-line">
-                                        </div>
-                                        @error('problem_price') <div class="text-danger">{{$message}}</div> @enderror
+<div class="container-fluid">
+    <div class="header">
+        <h1 class="header-title">
+            Manage Possible Problems
+        </h1>
+        <!-- <p class="header-subtitle">Your sales increased by 4.25% and revenue increased by 5.12%.</p> -->
+    </div>
+
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-actions float-right">
+                    <a href="#" class="mr-1">
+                        <i class="align-middle" data-feather="refresh-cw"></i>
+                    </a>
+                    <div class="d-inline-block dropdown show">
+                        <a href="#" data-toggle="dropdown" data-display="static">
+                            <i class="align-middle" data-feather="more-vertical"></i>
+                        </a>
+
+                        <!-- <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div> -->
+                    </div>
+                </div>
+                <h5 class="card-title mb-0">Total Engineers (<span style="color: red;">{{App\Models\PossibleProblems::count()}})</span></h5>
+                
+                @if(Session::has('success'))
+                    <div id="msg" style="padding: 8px; text-align: center;" class="alert alert-success">{{ Session::get('success')}}</div>
+                @endif
+                @if(Session::has('fail'))
+                    <div id="msg" style="padding: 8px; text-align: center;" class="alert alert-danger">{{ Session::get('fail')}}</div>
+                @endif
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card ml-5">
+                        <div class="card-body">
+                            <form action="{{route('admin.addProblemsStore')}}" method="post" class="form-horizontal form-material mx-2">
+                                @csrf
+                                <div class="form-group">
+                                    <label class="col-md-12" style="font-weight: bold;">Add Problem:</label>
+                                    <div class="col-md-12" style="font-weight: bold;">
+                                        <input type="text" name="add_problem" value="{{old('add_problem')}}" placeholder="Add List of Possible Problems"
+                                            class="form-control form-control-line">
                                     </div>
-                                    
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <button class="btn btn-success text-white"> <i class="fas fa-plus"></i> Add Problem</button>
-                                        </div>
+                                    @error('add_problem') <div class="text-danger">{{$message}}</div> @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12" style="font-weight: bold;">Add Problem Price:</label>
+                                    <div class="col-md-12" style="font-weight: bold;">
+                                        <input type="text" name="problem_price" value="{{old('problem_price')}}" placeholder="Add problem fixing price"
+                                            class="form-control form-control-line">
                                     </div>
-                                </form>
+                                    @error('problem_price') <div class="text-danger">{{$message}}</div> @enderror
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success text-white"> <i class="fas fa-plus"></i> Add Problem</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card mr-5">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="datatables-basic" class="table table-striped" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th >Problems</th>
+                                            <th >Price</th>
+                                            <th class="align-middle" width="20%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($possibleProblems as $possibleProblem)
+                                            <tr>
+                                                <td class="align-middle">{{ $possibleProblem->possibleProblems }}</td>
+                                                <td class="align-middle">#{{ $possibleProblem->price }}</td>
+                                                <td>
+                                                    
+                                                    <form action="{{route('admin.deleteProblem', [$possibleProblem->remember_token, $possibleProblem->possibleProblems])}}" method="post">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <a href="{{route('admin.editProblem', [$possibleProblem->possibleProblems, $possibleProblem->remember_token])}}"><button class="btn btn-primary" type="button" style="color: white; border-radius: 50%;"><i class="fa fa-eye"></i></button></a>
+                                                        <button class="btn btn-danger" style="color: white; border-radius: 50%;"><i class="fa fa-trash"></i></button>
+                                                    </form>
+                                                </td>
+                                                
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <!-- Column -->
-                   
-        <!-- Column -->
-        <div class="col-lg-8 col-xlg-9 col-md-7">
-            <div class="card">
-                <div class="card-body"> 
-                    <h4 style="font-weight: bold;">List of Possible Problems</h4>
-                    @if(Session::has('success'))
-                        <div id="msg" style="font-weight: bold; text-align: center;" class="alert alert-success">{{ Session::get('success')}}</div>
-                    @endif
-                    @if(Session::has('fail'))
-                        <div id="msg" style="font-weight: bold; text-align: center;" class="alert alert-danger">{{ Session::get('fail')}}</div>
-                    @endif
-                    
-                <div class="table table-responsive table-striped table-hover">
-                    <table class="table">
-                    <thead>
-                            <tr>
-                                <!-- <th scope="col">#</th> -->
-                                <th scope="col">Possible Problems</th>
-                                <th scope="col">Price</th>
-                                <th colspan="2" class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($possibleProblems as $possibleProblem)
-                                <tr>
-                                    <td>{{ $possibleProblem->possibleProblems }}</td>
-                                    <td>#{{ $possibleProblem->price }}</td>
-                                    <td><a href="{{route('admin.editProblem', [$possibleProblem->possibleProblems, $possibleProblem->remember_token])}}"><button class="btn btn-primary" style="color: white; border-radius: 50%;"><i class="fa fa-eye"></i></button></a></td>
-                                    <td>
-                                        <form action="{{route('admin.deleteProblem', [$possibleProblem->remember_token, $possibleProblem->possibleProblems])}}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="btn btn-danger" style="color: white; border-radius: 50%;"><i class="fa fa-trash"></i></button>
-                                        </form>
-                                    </td>                              
-                                    
-                                </tr>
-                       @endforeach
-                                                       
-
-                            
-                            
-                            
-                        </tbody>
-                    </table>
-                </div>
-
                 </div>
             </div>
+            
         </div>
-        <!-- Column -->
     </div>
+
 @endsection

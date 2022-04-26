@@ -14,8 +14,13 @@
                     <div class="app__data">
                         <span class="section-subtitle app__initial">XPRESSFIXING</span>
                         <h2 class="section-title app__initial">For Quick Device Repairs and Fast Delivery</h2>
-                        <p class="app__description">Tell us which phone has to be repaired. Our super-skilled technician will be there and make it as good as new with no Glitches.</p>
+                        <p class="app__description">Tell us which phone has to be repaired. Our super-skilled technicians will be there and make it as good as new with no Glitches.</p>
                         <div class="app__stores">
+                        @if(Session::get('UserLoginId') != "")
+                        <a href="{{route('customer.indexs')}}" class="button">Order for Repair</a>
+                        @else
+                        <a href="{{route('auth.login')}}" class="button">Order for Repair</a>
+                        @endif
                             <!-- <a href="#"><img src="{{asset('customers/assets/img/app1.png')}}" alt="" class="app__store"></a>
                             <a href="#"><img src="{{asset('customers/assets/img/app2.png')}}" alt="" class="app__store"></a> -->
                         </div>
@@ -38,8 +43,10 @@
                         <span class="section-subtitle about__initial">About us</span>
                         <h2 class="section-title about__initial">Xpressfixing</h2>
                         <p class="about__description">For Quick Device Repairs and Fast Delivery</h2>
-                        <p class="app__description">Xpressfixing is a advance service designed to make easy mobile and system repairs without making it hard for our client. Search on the mobile that needs to get repaired, select its related problems, and that's it. You will be given our range of services to choose from, like - mobile screen, mic, battery, speaker, receiver, charging jack replacement with the best possible quote for your mobile phone repair.
-One of our Technicians very close to your location will be directed to you  to work on the device and repair it. Xpressfixing even offers a 2-month warranty and a week-long money back guarantee. Can it get any better than this?</p>
+                        <p class="app__description">Xpressfixing is an advance service platform designed to make easy Mobile Phones and PCs repairs without making it hard for our clients. 
+                        Search the brand and model of mobile phone that needs to be repaired, select its related problems, and that's it. You will be given our range of services to choose from, like mobile screen,
+                        mic, battery, speaker, receiver, charging jack replacement with the best possible quote for your mobile phone repairs. One of our Technicians closest to your location will be assigned to you to work
+                        on the device and repair it. Xpressfixing also offer a 2-MONTH WARRANTY and a week-long money back guarantee. Can it ge any better than this?</p>
                         <a href="{{route('index')}}#services" class="button">Explore More</a>
                     </div>
 

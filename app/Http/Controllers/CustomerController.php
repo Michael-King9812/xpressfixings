@@ -23,6 +23,7 @@ use App\Models\PossibleProblems;
 use App\Events\SendPosition;
 use App\Models\Engineer;
 
+
 class CustomerController extends Controller
 {
     public function __construct() {
@@ -31,7 +32,7 @@ class CustomerController extends Controller
 
     public function indexs() {
         $data = array();
-        $orderDetails = orderdetail::all()->where('user_id','=', Session::get('UserLoginId'));
+        $orderDetails = orderdetail::where('user_id','=', Session::get('UserLoginId'))->orderBy('id', 'desc')->get();
         $allProblems = PossibleProblems::all();
         $allStates = State::all();
 
@@ -56,8 +57,8 @@ class CustomerController extends Controller
 
     public function verify($token, $reference) {
        
-        // $sec = "sk_live_8a2282d554a7c85e4f062a6c15e4179b577de832";
-        $sec = "sk_test_9f8d7995f83cafc99b6a36b21a7108fb3049eaf7";
+        $sec = "sk_live_8a2282d554a7c85e4f062a6c15e4179b577de832";
+        // $sec = "sk_test_9f8d7995f83cafc99b6a36b21a7108fb3049eaf7";
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
@@ -90,7 +91,7 @@ class CustomerController extends Controller
 
             $order = Orderdetail::where('remember_token', $token)->first(); 
   
-            $order->approvalImage = 'storage\Payment_Proof_Upload_Images\paid\paid-g21daab019_640.png'; 
+            $order->approvalImage = 'Payment_Proof_Upload_Images\paid\paid-g21daab019_640.png'; 
             $order->approvalStatus = '2';
             $order->approval = '2';
 
@@ -118,7 +119,9 @@ class CustomerController extends Controller
 
         $state = $orderDetails->currentState;
 
-        $allEngineers = Engineer::where('state',$state)->get();
+        $allEngineers = Engineer::where('state',$state)
+                        ->where('status','1')
+                        ->orderBy('id', 'desc')->get();
         $assignedEngineer = Engineer::where('remember_token', $orderDetails->assignedEngineer)->first();
 
         return view('customers.orderdetailss', compact(['data','orderDetails','assignedEngineer','allEngineers']));
@@ -147,7 +150,9 @@ class CustomerController extends Controller
 
     public function getEngineerDetails(Request $request)
     {
-        $engineersData = Engineer::where('remember_token', $request->engineers)->first();
+        $engineersData = Engineer::where('remember_token', $request->engineers)
+        ->where('status','1')
+        ->first();
         return response()->json($engineersData);
     }
 
@@ -160,7 +165,7 @@ class CustomerController extends Controller
     public function getEngineersByState($state)
     {
         $engineersData = Engineer::where('state', $state)
-                    ->where('status','=','1')->get();
+                    ->where('status','=','1')->orderBy('id', 'desc')->get();
         return response()->json($engineersData);
     }
 
@@ -170,7 +175,7 @@ class CustomerController extends Controller
         
         $allEngineers['data'] = Engineer::orderby('id','asc')
                                 ->select('fullname','phoneNumber','email','address','state','remember_token')
-                                ->where('remember_token', $engineerToken)->get();
+                                ->where('remember_token', $engineerToken)->orderBy('id', 'desc')->get();
 
         return response()->json($allEngineers);
     }
@@ -226,6 +231,7 @@ class CustomerController extends Controller
         $order->user_id = $user_id;
         $order->phone = $phoneNumber;
         $order->deviceType = $deviceType;
+        $order->phoneType = $phoneType;
         $order->model = $model;
         $order->imieNo = $imieNo;
         $order->complain = $complain;
@@ -258,15 +264,20 @@ class CustomerController extends Controller
             'proof_upload_image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:100000',
         ]);
 
-        $uploadImagePath = 'storage/'.$request->file('proof_upload_image')->store('Payment_Proof_Upload_Images', 'public');
+        if($request->file('proof_upload_image')){
+            $file= $request->file('proof_upload_image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move('Payment_Proof_Upload_Images', $filename);
+            
+            $data['proof_upload_image'] = $filename;
+            $uploadImagePath = 'Payment_Proof_Upload_Images/'.$data['proof_upload_image'];
+        }
 
-        // $order = Orderdetail::where('remember_token', $token)->first();
         $order = Orderdetail::where('remember_token', $token)->first(); 
-  
         $order->approvalImage = $uploadImagePath; 
         $order->approvalStatus = '1';
-
         $ordered = $order->save();
+
 
         if ($ordered) {
             return redirect()->back()->with('success', 'Proof Uploadded Successfully.');

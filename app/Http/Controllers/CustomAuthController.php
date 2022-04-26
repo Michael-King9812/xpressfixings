@@ -48,13 +48,13 @@ class CustomAuthController extends Controller
             'password' => 'required|min:6|max:15'
         ]);
 
-        // $postUsersData = [
-        //     'fullname' => $request->fullname,
-        //     'email' => $request->email,
-        //     'category' => $request->category,
-        //     'password' => $request->password,
-        // ];
-        // $res = $this->database->getReference($this->tablename)->push($postUsersData);
+        $postUsersData = [
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'category' => $request->category,
+            'password' => $request->password,
+        ];
+        $res = $this->database->getReference($this->tablename)->push($postUsersData);
 
         $user = new User();
         $user->fullname = $request->fullname;
@@ -94,10 +94,10 @@ class CustomAuthController extends Controller
                     return redirect('/customer/dashboards');
                 } 
                 elseif ($user->category == 'admin') {
-                    return redirect('/admins/dashboard');
+                    return redirect('/admin/dashboard');
                 } 
                 elseif ($user->category == 'engineer') {
-                    return redirect('/engineer/dashboard');
+                    return redirect('/engineers/dashboard');
                 }
                 elseif ($user->category == 'rider') {
                     return redirect('/rider/dashboard');
@@ -129,7 +129,7 @@ class CustomAuthController extends Controller
             if(Hash::check($request->password, $engineer->password)) {
                 
                 $request->session()->put('UserLoginId', $engineer->id);
-                return redirect('/engineer/dashboard');    
+                return redirect('/engineers/dashboard');    
 
             } else {
                 return back()->with('fail', 'Your Password did not match.');
@@ -313,6 +313,7 @@ class CustomAuthController extends Controller
         $engineerModel->address = $engineerAddress;
         $engineerModel->city = $engineerCity;
         $engineerModel->state = $engineerState;
+        $engineerModel->status = "0";
         $engineerModel->password = Hash::make($engineerPassword);
         $engineerModel->remember_token = $engineerToken;
 

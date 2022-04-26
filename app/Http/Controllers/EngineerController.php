@@ -21,7 +21,6 @@ class EngineerController extends Controller
         $this->middleware('UserLoginId');
     }
 
-
     public function index() {
         $data = array();
                 
@@ -29,13 +28,28 @@ class EngineerController extends Controller
             $data = Engineer::where('id','=', Session::get('UserLoginId'))->first();
         }
 
-        $orderDetails = orderdetail::where('assignedEngineer',$data->remember_token)->get();
+        return view('engineers.dashboard', compact(['data']));
+    }
+
+    public function orders() {
+        $data = array();
+                
+        if (Session::has('UserLoginId')) {
+            $data = Engineer::where('id','=', Session::get('UserLoginId'))->first();
+        }
+
+        $orderDetails = orderdetail::where('assignedEngineer',$data->remember_token)->orderBy('id', 'desc')->get();
 
         return view('engineers.index', compact(['data','orderDetails']));
     }
 
     public function profile() {
-        return view('engineers.profile');
+        $data = array();
+                
+        if (Session::has('UserLoginId')) {
+            $data = Engineer::where('id','=', Session::get('UserLoginId'))->first();
+        }
+        return view('engineers.profile', compact('data'));
     }
 
     public function orderdetails() {
@@ -51,7 +65,7 @@ class EngineerController extends Controller
             $data = Engineer::where('id','=', Session::get('UserLoginId'))->first();
         }
 
-        $orderDetails = orderdetail::where('assignedEngineer', $data->remember_token)->get();
+        $orderDetails = orderdetail::where('assignedEngineer', $data->remember_token)->orderBy('id', 'desc')->get();
 
         return view('engineers.managecustomers', compact('data','orderDetails'));
     }
@@ -69,7 +83,7 @@ class EngineerController extends Controller
         $userOrderDetails = Orderdetail::where('remember_token',$token)->first();
         $state = $userOrderDetails->currentState;
 
-        $allEngineers = Engineer::where('state',$state)->get();
+        $allEngineers = Engineer::where('state',$state)->orderBy('id', 'desc')->get();
         
         return view('engineers.singlepage', compact('data', 'allEngineers','userOrderDetails'));
     }
@@ -81,8 +95,8 @@ class EngineerController extends Controller
         if (Session::has('UserLoginId')) {
             $data = Engineer::where('id','=', Session::get('UserLoginId'))->first();
         }
-        $orderDetails = orderdetail::where('status','=','0')
-                ->where('assignedEngineer', $data->remember_token)->get();
+        $orderDetails = orderdetail::where('status','=','4')
+                ->where('assignedEngineer', $data->remember_token)->orderBy('id', 'desc')->get();
         return view('engineers.neworders', compact(['data','orderDetails']));
     }
 
@@ -93,7 +107,7 @@ class EngineerController extends Controller
             $data = Engineer::where('id','=', Session::get('UserLoginId'))->first();
         }
         $orderDetails = orderdetail::where('status','=','2')
-                ->where('assignedEngineer', $data->remember_token)->get();
+                ->where('assignedEngineer', $data->remember_token)->orderBy('id', 'desc')->get();
         return view('engineers.alldone', compact(['data','orderDetails']));
     }
 
@@ -199,7 +213,7 @@ class EngineerController extends Controller
     public function allPending() {
         
         $data = array();
-        $orderDetails = orderdetail::where('status','=','0')->get();
+        $orderDetails = orderdetail::where('status','=','0')->orderBy('id', 'desc')->get();
 
         if (Session::has('UserLoginId')) {
             $data = Engineer::where('id','=', Session::get('UserLoginId'))->first();
@@ -210,7 +224,7 @@ class EngineerController extends Controller
     public function allDone() {
         
         $data = array();
-        $orderDetails = orderdetail::where('status','4')->get();
+        $orderDetails = orderdetail::where('status','4')->orderBy('id', 'desc')->get();
 
         if (Session::has('UserLoginId')) {
             $data = Engineer::where('id','=', Session::get('UserLoginId'))->first();
@@ -220,7 +234,7 @@ class EngineerController extends Controller
 
     public function allAwaitingResponse() {
         $data = array();
-        $orderDetails = orderdetail::where('status','2')->get();
+        $orderDetails = orderdetail::where('status','2')->orderBy('id', 'desc')->get();
 
         if (Session::has('UserLoginId')) {
             $data = Engineer::where('id','=', Session::get('UserLoginId'))->first();

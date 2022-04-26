@@ -25,10 +25,22 @@ class AdminController extends Controller
         $this->middleware('UserLoginId');
     }
 
+    public function index()
+    {
+        $data = array();
+        if (Session::has('UserLoginId')) {
+            $data = User::where('id','=', Session::get('UserLoginId'))->first();
+        }
+
+        return view('admins.dashboard', [
+            'data' => $data,
+        ]);
+    }
+
     public function customers() {
         
         $data = array();
-        $orderDetails = orderdetail::all();
+        $orderDetails = orderdetail::orderBy('id', 'desc')->get();
         
         if (Session::has('UserLoginId')) {
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
@@ -40,7 +52,7 @@ class AdminController extends Controller
     public function allPending() {
         
         $data = array();
-        $orderDetails = orderdetail::where('status','=','0')->get();
+        $orderDetails = orderdetail::where('status','=','4')->orderBy('id', 'desc')->get();
 
         if (Session::has('UserLoginId')) {
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
@@ -51,17 +63,20 @@ class AdminController extends Controller
     public function allDone() {
         
         $data = array();
-        $orderDetails = orderdetail::where('status','4')->get();
+        $orderDetails = orderdetail::where('status','2')->orderBy('id', 'desc')->get();
 
         if (Session::has('UserLoginId')) {
-            $data = User::where('id','=', Session::get('UserLoginId'))->first();
+            $data = User::where('id', Session::get('UserLoginId'))->first();
         }
-        return view('admins.allapprovedorder', compact(['data','orderDetails']));
+        return view('admins.allDone', [
+            'data' => $data,
+            'orderDetails' => $orderDetails
+        ]);
     }
 
     public function allAwaitingResponse() {
         $data = array();
-        $orderDetails = orderdetail::where('status','2')->get();
+        $orderDetails = orderdetail::where('status','2')->orderBy('id', 'desc')->get();
 
         if (Session::has('UserLoginId')) {
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
@@ -78,15 +93,13 @@ class AdminController extends Controller
         return view('admins.manageengineers', compact('data'));
     }
     
-
-    
     public function approveEngineer() {
         $data = array();
         if (Session::has('UserLoginId')) {
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
         }
 
-        $addEngineer = Engineer::where('status','0')->get();
+        $addEngineer = Engineer::where('status','0')->orderBy('id', 'desc')->get();
 
         return view('admins.approveengineers', compact('data','addEngineer'));
     }
@@ -112,7 +125,7 @@ public function approveEngineerUpdate(Request $request, $token) {
         $approvedEngineer = $engineerDetails->save();
 
         if ($approvedEngineer) {
-            return redirect('admins/approve/engineer')->with('success', $engineerDetails->fullname.' approved as an Engineer successfully.');
+            return redirect('admin/approve/engineer')->with('success', $engineerDetails->fullname.' approved as an Engineer successfully.');
         } else {
             return redirect()->back()->with('fail', 'Engineer approval failed.');
         }
@@ -175,7 +188,7 @@ public function approveEngineerUpdate(Request $request, $token) {
         $userOrderDetails = Orderdetail::where('remember_token',$token)->first();
         $state = $userOrderDetails->currentState;
 
-        $allEngineers = Engineer::where('state',$state)->get();
+        $allEngineers = Engineer::where('state',$state)->orderBy('id', 'desc')->get();
         $assignedEngineer = Engineer::where('remember_token', $userOrderDetails->assignedEngineer)->first();
         
         return view('admins.singlepage', compact('data', 'allEngineers','userOrderDetails','assignedEngineer'));
@@ -202,25 +215,26 @@ public function approveEngineerUpdate(Request $request, $token) {
 
         $possibleProblems = PossibleProblems::all();
         $problem = PossibleProblems::where('possibleProblems', $problem)
-                                    ->where('remember_token', $token)->first();
+                                    ->where('remember_token', $token)
+                                    ->first();
         
                                     
         return view('admins.editProblem', compact('data', 'problem','possibleProblems'));
     }
     
     
-    public function addEngineer() {
+    public function viewEngineers() {
         $data = array();
         if (Session::has('UserLoginId')) {
             $data = User::where('id','=', Session::get('UserLoginId'))->first();
         }
 
-        $addEngineer = Engineer::where('status','=','1')->get();
+        $viewEngineers = Engineer::where('status','=','1')->orderBy('id', 'desc')->get();
 
-        return view('admins.addengineer', compact('data','addEngineer'));
+        return view('admins.manageengineers', compact('data','viewEngineers'));
     } 
 
-    public function addEngineerStore(Request $request)
+    public function viewEngineersStore(Request $request)
     {
         
         $request->validate([
@@ -310,7 +324,11 @@ public function approveEngineerUpdate(Request $request, $token) {
     {
         $engineerDelete = Engineer::where('remember_token', $token)->first();
 
-        $deleteEngineer = $engineerDelete->delete();
+        $deleteEngineer = \DB::table('engineers')
+        ->where('remember_token', $token)
+        ->update([
+             'status'=> '0',
+        ]);
 
         if ($deleteEngineer) {
             return redirect()->back()->with('success', $engineerName.' Deleted Successfully.');
@@ -377,14 +395,26 @@ public function approveEngineerUpdate(Request $request, $token) {
 
     public function deleteProblem($token, $problem)
     {
-        
 
         $problemDelete = PossibleProblems::where('remember_token', $token)->first();
 
         $deleteProblem = $problemDelete->delete();
 
         if ($deleteProblem) {
-            return redirect('admin.addProblems')->with('success', $problem.' Deleted Successfully.');
+            return redirect()->back()->with('success', $problem.' Deleted Successfully.');
+        } else {
+            return redirect()->back()->with('fail', 'Problem in Deleting Data.');
+        }
+    }
+
+    public function deleteState($id)
+    {
+        
+        // $deleteState = State::findOrFail($id)->delete();
+        $deleteState = State::find($id)->delete();
+
+        if ($deleteState) {
+            return redirect()->back()->with('success', $problem.' Deleted Successfully.');
         } else {
             return redirect()->back()->with('fail', 'Problem in Deleting Data.');
         }

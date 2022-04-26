@@ -33,10 +33,17 @@
                                         <th colspan="6">Phone:</th>
                                         <td>{{ $orderDetails->phone }} </td>
                                     </tr>
+                   
                                     <tr>
                                         <th colspan="6">Device Type:</th>
                                         <td>{{ $orderDetails->deviceType }} </td>
                                     </tr>
+                                    
+                                    <tr>
+                                        <th colspan="6">Device Name:</th>
+                                        <td>{{ $orderDetails->phoneType }} </td>
+                                    </tr>
+                                    
                                     <tr>
                                         <th colspan="6">Model:</th>
                                         <td> {{ $orderDetails->model }} </td>
@@ -95,8 +102,14 @@
                                             elseif ($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus == '2') {
                                                 echo "<p style='color: darkgreen; font-weight: bold;'><i class='fa fa-check'></i> Payment Verified and Fixing in Progress..</p>";
                                             }
-                                            elseif ($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus == '0') {
+                                            elseif ($orderDetails->problemCategory == 'others' && $orderDetails->approval == '1' && $orderDetails->deviceFixPrice == '') {
+                                                echo "<p style='color: purple; font-weight: bold;'>Waiting for Admin to assign price</p>";
+                                            }
+                                            elseif ($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->deviceFixPrice != '') {
                                                 echo "<p style='color: purple; font-weight: bold;'>Waiting for your Approval...</p>";
+                                            }
+                                            elseif ($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus == '0') {
+                                                echo "<p style='color: purple; font-weight: bold;'>Select Engineer...</p>";
                                             }
                                             elseif ($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus == '1') {
                                                 echo "<p style='color: orange; font-weight: bold;'>Wait for Verification...</p>";
@@ -152,7 +165,7 @@
                                                 @if($orderDetails->problemCategory == 'others' && $orderDetails->deviceFixPrice == '')
                                                     <p style='color: darkblue; font-weight: bold;'><span style='color: tomato'>Request Recieved, wait for Admin to assign price</span><br>
 
-                                                @elseif($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus != '2')
+                                                @elseif(($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus != '2' && $orderDetails->assignedEngineer != '') || ($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->deviceFixPrice != '') )
                                                     <!-- <form id="form" action="{{route('approve.fixOrder', $orderDetails->remember_token)}}" method="post">
                                                         @csrf
                                                         @method('put')
@@ -290,19 +303,27 @@
                             @if(($orderDetails->status == '4') && ($orderDetails->approval == '1' && $orderDetails->approvalStatus == '1') || ($orderDetails->status == '4' && $orderDetails->approval == '1' && $orderDetails->approvalStatus == '2') || ($orderDetails->status == '4' && $orderDetails->approval == '2' && $orderDetails->approvalStatus == '2'))
                                 <h6 style="font-weight: bold;">Payment Proof:</h6>  
                                 
-                                @if($orderDetails->approvalImage == "storage\Payment_Proof_Upload_Images\paid\paid-g21daab019_640.png" )
+                                @if($orderDetails->approvalImage == "Payment_Proof_Upload_Images\paid\paid-g21daab019_640.png" )
                                     <img src="{{asset($orderDetails->approvalImage)}}" alt="Approval Image" style="width: 160px; height: 160px; border-radius: 5px;">
                                 @else
                                     <a href="{{asset($orderDetails->approvalImage)}}" target="_top">
                                         <img src="{{asset($orderDetails->approvalImage)}}" alt="Approval Image" style="width: 160px; height: 160px; border-radius: 5px;">
                                     </a><br><br>
                                     @if( $orderDetails->status == '4' && $orderDetails->approval == '2' && $orderDetails->approvalStatus == '2')
-                                        <img src="{{asset('storage\Payment_Proof_Upload_Images\paid\paid-g21daab019_640.png')}}" alt="Approval Image" style="width: 160px; height: 160px; border-radius: 5px;">
+                                        <img src="{{asset('Payment_Proof_Upload_Images\paid\paid-g21daab019_640.png')}}" alt="Approval Image" style="width: 160px; height: 160px; border-radius: 5px;">
                                     @endif
                                 @endif
                                 <br>
                             
                             @endif
+                            <br><br>
+                            <p>
+                                <span style="font-weight: bold;">IMPORTANT PAYMENT NOTICE:</span><br>
+                                <span style="color: red;">
+                                All payment is to be made directly on the website Xpressfixing will never assign any engineer to collect money via is personal account.
+                                Paying to an Engineers personal account is at customers risk</span>
+                            </p>
+
                         </div>
                             </div>
                         
@@ -310,7 +331,8 @@
                         
                         <!-- <div class="col-md-1"></div> -->
                         <div class="col-md-6">
-                            @if($orderDetails->status == '4' && $orderDetails->approval == '2' && $orderDetails->assignedEngineer == "")
+                            <!--  && $orderDetails->approval == '2'  -->
+                            @if($orderDetails->status == '4' && $orderDetails->assignedEngineer == "")
                                 <h4 class="section-title" style="text-align: left; font-weight: bold; font-size: 25px;">Engineer Details</h4><br>
 
                                 <div class="form-group">
@@ -545,8 +567,6 @@
                     dataType: 'json',
                     success: function (response) {
 
-                        
-                        
                         $('#engineerDetails') .find('tr') .remove() .end().append('\
                                 <tr>\
                                     <td>Name:</td>\
@@ -642,8 +662,8 @@
                 
 
                 let handler = PaystackPop.setup({
-                // key: 'pk_live_56bf056f32417eaab0bafb14fdcf45d4085a12f7', // Replace with your public key
-                key: 'pk_test_046a4a3973d277683a582a0124889681b5b9097d', // Replace with your public key
+                key: 'pk_live_56bf056f32417eaab0bafb14fdcf45d4085a12f7', // Replace with your public key
+                // key: 'pk_test_046a4a3973d277683a582a0124889681b5b9097d', // Replace with your public key
                 email: document.getElementById("email-address").value,
                 amount: deviceAmount * 100,
                 ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you

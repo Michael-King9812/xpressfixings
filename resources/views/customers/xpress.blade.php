@@ -9,6 +9,9 @@
 @section('main')
 
 <main class="l-main">
+    <!-- IMPORTANT PAYMENT NOTICE
+    All payment is to be made directly on the website Xpressfixing will never assign any engineer to collect money via is personal account.
+    Paying to an Engineers personal account is at customers risk -->
 
             <section class="home" id="home">
                 
@@ -32,14 +35,14 @@
                                             <label class="col-md-12" style="font-weight: bold; font-size: 12px;">Full Name</label>
                                             <div class="col-md-12">
                                                 <input type="text" placeholder="{{$data->fullname}}"
-                                                    name="fullname" class="form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);" disabled>
+                                                    name="fullname" class="form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="example-email" class="col-md-12" style="font-weight: bold; font-size: 12px;">Email</label>
                                             <div class="col-md-12">
                                                 <input type="email" name="email" placeholder="{{$data->email}}"
-                                                    class="form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);" name="example-email"
+                                                    class="form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);" name="example-email"
                                                     id="example-email" disabled>
                                             </div>
                                         </div>
@@ -47,7 +50,7 @@
                                             <label class="col-md-12" style="font-weight: bold; font-size: 12px;">Phone No</label>
                                             <div class="col-md-12">
                                                 <input type="text" placeholder="+234 123 456 7890"
-                                                    name="phonenumber" value="{{old('phonenumber')}}" class="form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                    name="phonenumber" value="{{old('phonenumber')}}" class="form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     @error('phonenumber') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
                                                 </div>
                                         </div>
@@ -55,7 +58,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Device Type</label>
                                             <div class="col-sm-12">
-                                                <select name="deviceType" value="{{old('deviceType')}}" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                <select name="deviceType" value="{{old('deviceType')}}" class="form-select shadow-none form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     <option value="">Choose Problem Type</option>
                                                     <option>Phone</option>
                                                     <option>Laptop</option>
@@ -70,7 +73,7 @@
                                             <label class="col-md-12" style="font-weight: bold; font-size: 12px;">Phone Name</label>
                                             <div class="col-md-12">
                                                 <input type="text" placeholder="Enter Type of Phone"
-                                                    name="phonetype" value="{{old('phonetype')}}" class="form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                    name="phonetype" value="{{old('phonetype')}}" class="form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     @error('phonetype') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
                                                 </div>
                                         </div>
@@ -79,7 +82,7 @@
                                             <label class="col-md-12" style="font-weight: bold; font-size: 12px;">Device Model</label>
                                             <div class="col-md-12">
                                                 <input type="text" placeholder="Enter device model name"
-                                                    name="model" value="{{old('model')}}" class="form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                    name="model" value="{{old('model')}}" class="form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     @error('Model') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
                                                 </div>
                                         </div>
@@ -88,7 +91,7 @@
                                             <label class="col-md-12" style="font-weight: bold; font-size: 12px;">IMIE / Serial Number</label>
                                             <div class="col-md-12">
                                                 <input type="text" value="{{old('imieno')}}" name="imieno" placeholder="Enter IMIE Number/Serial Number"
-                                                    class="form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                    class="form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     @error('imieno') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
                                             </div>
                                         </div>
@@ -96,7 +99,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Select Device Problem with fixing Price</label>
                                             <div class="col-sm-12">
-                                                <select name="problemcategory" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                <select name="problemcategory" class="form-select shadow-none form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     <option value="">Choose Problem Type</option>
                                                     <option value="others">Others</option>
                                                     @foreach($allProblems as $all)
@@ -112,7 +115,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12" style="font-weight: bold; font-size: 12px;">Complain</label>
                                             <div class="col-md-12">
-                                                <textarea rows="5" value="{{old('')}}" name="complain" placeholder="Enter the Phone fault and complains here describing the real fault of your device intensively..." class="form-control form-control-line" style="padding: 5px 14px;  border: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></textarea>
+                                                <textarea rows="5" value="{{old('')}}" name="complain" placeholder="Enter the Phone fault and complains here describing the real fault of your device intensively..." class="form-control form-control-line" required style="padding: 5px 14px;  border: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></textarea>
                                             </div>
                                             @error('complain') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
                                         </div>
@@ -120,7 +123,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Current State</label>
                                             <div class="col-sm-12">
-                                                <select name="currentstate" id="currentState" value="{{old('currentstate')}}" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                <select name="currentstate" id="currentState" value="{{old('currentstate')}}" class="form-select shadow-none form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     <option value="">Select Current State</option>
                                                     @foreach($allStates as $listStates)
                                                         <option value="{{$listStates->stateName}}">{{$listStates->stateName}}</option>
@@ -136,7 +139,7 @@
                                             <label class="col-md-12" style="font-weight: bold; font-size: 12px;">City</label>
                                             <div class="col-md-12">
                                                 <input type="text" value="{{old('currentcity')}}" name="currentcity" placeholder="Enter your current city"
-                                                    class="form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                    class="form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                 @error('currentcity') <p style="color: red; font-size: 11px; padding: 8px 4px;">{{$message}} </p> @enderror
                                             </div>
                                         </div>
@@ -144,7 +147,7 @@
                                         <!-- <div class="form-group">
                                             <label class="col-sm-12" style="font-weight: bold; font-size: 12px;">Select Engineer</label>
                                             <div class="col-sm-12">
-                                                <select name="selectEngineer" id="selectEngineer" placeholder="Choose Engineer" value="{{old('selectEngineer')}}" class="form-select shadow-none form-control form-control-line" style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                                <select name="selectEngineer" id="selectEngineer" placeholder="Choose Engineer" value="{{old('selectEngineer')}}" class="form-select shadow-none form-control form-control-line" required style="padding: 10px 14px;  border: none; padding; 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                                     <option id="engineerOptions" value="">Choose Engineer</option>    
                                                     
                                                 </select>
@@ -167,6 +170,13 @@
                                             </div>
                                         </div><br>
                                         <span style="font-weight: bold; font-size: 15px; color: orange;"><i class="fa fa-exclamation-triangle"></i> Fixing will be Placed on 2 Month Warranty.</span><br><br>
+                                        <p>
+                                            <span style="font-weight: bold;">IMPORTANT PAYMENT NOTICE:</span><br>
+                                            <span style="color: red;">
+                                            All payment is to be made directly on the website Xpressfixing will never assign any engineer to collect money via is personal account.
+                                            Paying to an Engineers personal account is at customers risk</span>
+                                        </p>
+                                        <br>
                                     </form>
                                 </div>
                             
@@ -186,7 +196,7 @@
                         <thead>
                         <tr>
                             <!-- <th scope="col">#</th> -->
-                            <th scope="col">Email</th>
+                            <th scope="col">Time</th>
                             <th scope="col">Phone Number</th>
                             <th scope="col">Status</th>
                             <th scope="col">Current State</th>
@@ -206,7 +216,7 @@
                                         // 4 = approved 
                                     -->
 
-                                    <td>{{ $orderdetail->email }}</td>
+                                    <td>{{ $orderdetail->created_at->diffForHumans() }}</td>
                                     <td>{{ $orderdetail->phone }}</td>
                                     <td><span class="label label-rounded label-primary">
                                     <?php    
@@ -217,7 +227,7 @@
                                             echo "<p style='color: blue; font-weight: bold;'>Delivered</p>";
                                         }
                                         elseif ($orderdetail->status == '2') {
-                                            echo "<p style='color: darkblue; font-weight: bold;'><i class='fa fa-check-double'></i> Done</p>";
+                                            echo "<p style='color: green; font-weight: bold;'><i class='fa fa-check-double'></i> Done</p>";
                                         } 
                                         elseif ($orderdetail->status == '3') {
                                             echo "<p style='color: red; font-weight: bold;'>Cancelled</p>";

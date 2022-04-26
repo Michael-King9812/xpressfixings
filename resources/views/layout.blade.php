@@ -19,12 +19,14 @@
         <link rel="stylesheet" href="{{asset('customers/assets/css/styles.css')}}">
         <!-- <link rel="stylesheet" href="{{asset('css\bootstrap.css')}}">      -->
         <link rel="stylesheet" href="{{asset('customers/assets/js/jquery.min.js')}}">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+
         <title>Xpressfix Home</title>
 
         <style>
@@ -120,6 +122,32 @@
 
         @yield('main')
 
+
+        <!-- <div class="elfsight-app-686e9f02-e918-4df4-bfb1-e971dae11b26"></div> -->
+
+
+
+
+        <!-- GetButton.io widget -->
+<script type="text/javascript">
+    (function () {
+        var options = {
+            // whatsapp: "+2349055772501", // WhatsApp number
+            whatsapp: "+2348108554110", // WhatsApp number
+            call_to_action: "Message us", // Call to action
+            position: "left", // Position may be 'right' or 'left'
+        };
+        var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+        var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+    })();
+</script>
+<!-- /GetButton.io widget -->
+
+
+
+
         <!--========== FOOTER ==========-->
         <footer class="footer section bd-container" data-aos="fade-down-left">
             <div class="footer__container bd-grid">
@@ -158,14 +186,13 @@
                     <h3 class="footer__title">Adress</h3>
                     <ul>
                         <li><b>Location:</b> Osogbo, Osun State</li>
-                        <!-- <li>Jr Union #999</li>-->
-                        <li><b>Tell:</b> +234 905 577 251</li>
+                        <li><b>Tell:</b> +234 905 577 2501</li>
                         <li><b>Email:</b> xpressfixing1@gmail.com, support@xpressfixing.com</li>
                     </ul>
                 </div>
             </div>
         
-            <p class="footer__copy">&#169; <?php echo Date('Y') ?> <a href="https://xpressfixing.com">Xpressfix</a>. All right reserved</p>
+            <p class="footer__copy">&#169; <?php echo Date('Y') ?> <a href="https://xpressfixing.com">Xpressfixing</a>. All right reserved</p>
         </footer>
 
         <script>
